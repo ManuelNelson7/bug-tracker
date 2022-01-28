@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/ceabe9f5f3.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./styles/index.css">
+    <title>Bug Tracker</title>
+</head>
+
+
+<body onload="fetchData()">
+    <nav id="sidebar">
+        <div class="sidebar-container">
+
+            <div class="search">
+                <input type="text" placeholder="Buscar bug por nombre">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="projects">
+                <div class="project-header">
+                    <span class="text-70">Proyectos</span>
+                    <i id="add-project" onclick="addProject()" class="fas fa-plus"></i>
+                </div>
+
+
+                <ul class="project-list">
+                    <span class="project-selected">Todos los proyectos</span>
+                    <ul id='project-list'>
+                    </ul>
+                </ul>
+            </div>
+
+            <form id="form-bug" action="">
+                <div class="form-group">
+                    <label for="bug-name">Bug</label>
+                    <input id="bug-name" type="text" placeholder="Bug" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Proyecto</label>
+                    <select name="projects" id="projects-options" required>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Estado</label>
+                    <select name="status" id="status" required>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="En proceso">En proceso</option>
+                        <option value="Urgente">Urgente</option>
+                        <option value="Resuelto">Resuelto</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Fecha de entrega</label>
+                    <input id="due" type="date" placeholder="Fecha de entrega" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="responsible">Responsable</label>
+                    <input id="responsible" type="text" placeholder="Responsable" required>
+                </div>
+
+                <button onclick="addBug()">Agregar</button>
+            </form>
+
+            <a href="./index.html" class="logo-side">
+                <img src="./img/Logo.svg" alt="Bug tracker">
+            </a>
+        </div>
+    </nav>
+
+
+    <header>
+        <div class="container" id="header-container">
+            <h1>Mis Bugs</h1>
+            <div id="add-bug" onclick="modalBug()" class="btn dark2">Agregar Bug</div>
+        </div>
+    </header>
+
+    <main>
+        <hr>
+        <div class="container">
+            <div class="results">
+
+                <div class="result blue">
+                    <span id="open-bugs"></span>
+                    <p id="abiertos"></p>
+                </div>
+
+                <div class="result green">
+                    <span id="closed-bugs">1</span>
+                    <p>Bug resuelto</p>
+                </div>
+
+                <div class="result red">
+                    <span id="urgent-bugs">1</span>
+                    <p>Urgente</p>
+                </div>
+
+                <div class="result yellow">
+                    <span id="open-bugs">2</span>
+                    <p>Para mañana</p>
+                </div>
+
+                <div class="result light-blue">
+                    <span id="open-bugs">0</span>
+                    <p>+ 7 días</p>
+                </div>
+
+            </div>
+            <table>
+                <thead>
+                    <th id="bug-cell">Bug</th>
+                    <th>Estado</th>
+                    <th>Fecha de entrega</th>
+                    <th>Responsable</th>
+                </thead>
+                </th>
+                <tbody id="bug-table">
+
+                </tbody>
+            </table>
+
+        </div>
+    </main>
+
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
