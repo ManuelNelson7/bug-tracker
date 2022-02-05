@@ -57,8 +57,7 @@ const fetchProjects = () => {
     projectOptions.innerHTML = '';
 
     //Por cada elemento en projects, lo imprime en las listas
-    for (let i = 0; i < projects.length; i++) {
-        const project = projects[i];
+    for (const project of projects) {
         projectList.innerHTML += `<li class="project-item-list">${project}</li>`;
         projectOptions.innerHTML += `<option value="${project}">${project}</option>`
     }
@@ -69,17 +68,16 @@ const fetchBugs = () => {
     const bugTable = document.getElementById('bug-table');
     bugTable.innerHTML = '';
 
-    for (let i = 0; i < bugs.length; i++) {
-        const bug = bugs[i];
+    for (const bug of bugs) {
         bugTable.innerHTML += `<tr>
-            <td class="bug-name">${bug.name}</td>
-            <td class="status">
-                <div class="estado ${bug.status}">${bug.status}</div>
-            </td>
-            <td class="date">${bug.due}</td>
-            <td class="responsable">${bug.responsible}</td>
-        </tr>
-        `
+        <td class="bug-name">${bug.name}</td>
+        <td class="status">
+            <div class="estado ${bug.status}">${bug.status}</div>
+        </td>
+        <td class="date">${bug.due}</td>
+        <td class="responsable">${bug.responsible}</td>
+    </tr>
+    `
     }
 
     fetchTotalBugs();
