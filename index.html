@@ -12,6 +12,52 @@
 
 
 <body onload="fetchData()">
+
+    <div class="modal" id="bug-modal">
+        <form id="form-bug" action="">
+            <div class="form-group">
+                <label for="bug-name">Bug</label>
+                <input id="bug-name" type="text" placeholder="Nombre del bug" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Proyecto</label>
+                <select name="projects" id="projects-options" required>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Estado</label>
+                <select name="status" id="status" required>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="En proceso">En proceso</option>
+                    <option value="Urgente">Urgente</option>
+                    <option value="Resuelto">Resuelto</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Fecha de entrega</label>
+                <input id="due" type="date" placeholder="Fecha de entrega" required>
+            </div>
+
+            <div class="form-group">
+                <label for="responsible">Responsable</label>
+                <input id="responsible" type="text" placeholder="Responsable" required>
+            </div>
+
+            <div class="form-group">
+                <p id="alertBug"></p>
+            </div>
+
+            <div class="btn-row">
+                <button onclick="cancelBug()" class="secondary">Cancelar</button>
+                <button class="primary" onclick="addBug()">Agregar</button>
+            </div>
+        </form>
+
+    </div>
+
     <nav id="sidebar">
         <div class="sidebar-container">
 
@@ -34,41 +80,6 @@
                 </ul>
             </div>
 
-            <form id="form-bug" action="">
-                <div class="form-group">
-                    <label for="bug-name">Bug</label>
-                    <input id="bug-name" type="text" placeholder="Bug" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="status">Proyecto</label>
-                    <select name="projects" id="projects-options" required>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="status">Estado</label>
-                    <select name="status" id="status" required>
-                        <option value="Pendiente">Pendiente</option>
-                        <option value="En proceso">En proceso</option>
-                        <option value="Urgente">Urgente</option>
-                        <option value="Resuelto">Resuelto</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="date">Fecha de entrega</label>
-                    <input id="due" type="date" placeholder="Fecha de entrega" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="responsible">Responsable</label>
-                    <input id="responsible" type="text" placeholder="Responsable" required>
-                </div>
-
-                <button onclick="addBug()">Agregar</button>
-            </form>
-
             <a href="./index.html" class="logo-side">
                 <img src="./img/Logo.svg" alt="Bug tracker">
             </a>
@@ -79,7 +90,7 @@
     <header>
         <div class="container" id="header-container">
             <h1>Mis Bugs</h1>
-            <div id="add-bug" onclick="modalBug()" class="btn dark2">Agregar Bug</div>
+            <div onclick="openBug()" class="btn dark2">Agregar Bug</div>
         </div>
     </header>
 
@@ -88,19 +99,19 @@
         <div class="container">
             <div class="results">
 
-                <div class="result blue">
+                <div onclick="fetchBugs()" class="result blue">
                     <span id="open-bugs"></span>
                     <p id="abiertos"></p>
                 </div>
 
-                <div class="result green">
-                    <span id="closed-bugs">1</span>
-                    <p>Bug resuelto</p>
+                <div onclick="filterClosed()" class="result green">
+                    <span id="closed-bugs"></span>
+                    <p id="resueltos"></p>
                 </div>
 
-                <div class="result red">
-                    <span id="urgent-bugs">1</span>
-                    <p>Urgente</p>
+                <div onclick="filterUrgents()" class="result red">
+                    <span id="urgent-bugs"></span>
+                    <p id="urgentes"></p>
                 </div>
 
                 <div class="result yellow">
@@ -131,6 +142,7 @@
     </main>
 
     <script src="./js/main.js"></script>
+    <script src="./js/index.js"></script>
 </body>
 
 </html>

@@ -59,29 +59,50 @@ hr {
   font-weight: 500;
 }
 
-.blue {
+.blue,
+.En {
   background-color: #7296c5;
   color: #003459;
 }
 
-.green {
+.green,
+.Resuelto {
   background-color: #bfedd9;
   color: #18573d;
 }
 
-.red {
+.red,
+.Urgente {
   background-color: #edbfbf;
   color: #571818;
 }
 
-.yellow {
+.yellow,
+.Pendiente {
   background-color: #ede6bf;
-  color: #575318;
+  color: #72611d;
 }
 
 .light-blue {
   background-color: #98c1d9;
   color: #003459;
+}
+
+.estado {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 0.9em;
+  width: 6em;
+  padding: 4px 0;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .btn {
@@ -224,6 +245,25 @@ nav .sidebar-container .projects {
   margin-top: 2em;
 }
 
+nav .sidebar-container .projects .project-header {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+nav .sidebar-container .projects .project-header #add-project {
+  margin-right: 10px;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+
 nav .sidebar-container .projects .project-list {
   margin-top: 1em;
   display: -webkit-box;
@@ -238,6 +278,18 @@ nav .sidebar-container .projects .project-list {
   cursor: pointer;
 }
 
+nav .sidebar-container .projects .project-list ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.8em;
+  list-style: none;
+}
+
 nav .sidebar-container .projects .project-list li {
   -webkit-transition: ease-in-out 0.2s;
   transition: ease-in-out 0.2s;
@@ -245,6 +297,34 @@ nav .sidebar-container .projects .project-list li {
 
 nav .sidebar-container .projects .project-list li:hover {
   color: #bfedd9;
+}
+
+nav .sidebar-container #form-bug {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 2em;
+  gap: 1em;
+}
+
+nav .sidebar-container #form-bug .form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.5em;
+}
+
+nav .sidebar-container #form-bug .form-group label {
+  color: #fff;
+  font-weight: 500;
 }
 
 nav .sidebar-container .logo-side {
@@ -332,7 +412,7 @@ main {
 }
 
 .container table thead #bug-cell {
-  width: 32em;
+  min-width: 24em;
 }
 
 .container table thead th {
@@ -345,11 +425,134 @@ main {
 
 .container table tbody td {
   border-bottom: 2px solid rgba(183, 183, 183, 0.5);
-  padding: 20px 0;
+  padding: 20px 1.5em 20px 0;
 }
 
 .container table tbody .bug-name {
   font-weight: 500;
+}
+
+.container table tbody .date {
+  font-size: 0.9em;
+  font-weight: 500;
+  color: #3d5a80;
+}
+
+.container table tbody .responsable {
+  color: #3d5a80;
+}
+
+.modal {
+  display: none;
+  -webkit-transition: opacity 0.3s ease !important;
+  transition: opacity 0.3s ease !important;
+}
+
+.modal.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.modal.active #form-bug {
+  position: absolute;
+  background-color: #fff;
+  padding: 1em 0.5em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 1.2em;
+  width: 25em;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 12px;
+  z-index: 101;
+}
+
+.modal.active #form-bug .form-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 90%;
+  gap: 5px;
+}
+
+.modal.active #form-bug .form-group label {
+  font-weight: 500;
+}
+
+.modal.active #form-bug .form-group input {
+  border: none;
+  border: 2px solid #c2c2c2;
+  padding: 8px;
+  border-radius: 8px;
+  font-family: roboto;
+}
+
+.modal.active #form-bug .form-group input:focus {
+  border: 2px solid #003459 !important;
+  outline: none;
+}
+
+.modal.active #form-bug .form-group select {
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #e5e5e5de;
+}
+
+.modal.active #form-bug .btn-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  width: 90%;
+  gap: 5px;
+}
+
+.modal.active #form-bug .btn-row button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.modal.active #form-bug .btn-row button.primary {
+  background-color: #003459;
+  color: #fff;
+}
+
+.modal.active #form-bug .btn-row button.secondary {
+  background-color: #eeecec;
+  color: #000;
 }
 
 nav {

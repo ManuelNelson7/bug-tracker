@@ -33,7 +33,6 @@ hr {
     width: 100%;
 }
 
-
 .result {
     display: flex;
     flex-direction: column;
@@ -62,22 +61,26 @@ hr {
     }
 }
 
-.blue, .En {
+.blue,
+.En {
     background-color: $blue;
     color: $dark;
 }
 
-.green, .Resuelto {
+.green,
+.Resuelto {
     background-color: $green;
     color: $green2;
 }
 
-.red, .Urgente {
+.red,
+.Urgente {
     background-color: $red;
     color: $red2;
 }
 
-.yellow, .Pendiente {
+.yellow,
+.Pendiente {
     background-color: $yellow;
     color: $yellow2;
 }
@@ -210,7 +213,6 @@ nav {
                     flex-direction: column;
                     gap: 0.8em;
                     list-style: none;
-
                 }
 
                 li {
@@ -250,7 +252,6 @@ nav {
             img {
                 height: 1.8em;
             }
-
         }
     }
 }
@@ -322,7 +323,7 @@ main {
             margin-top: 1em;
             td {
                 border-bottom: 2px solid rgba(183, 183, 183, 0.5);
-                padding: 20px 1.5em 20px 0;  
+                padding: 20px 1.5em 20px 0;
             }
 
             .bug-name {
@@ -338,7 +339,100 @@ main {
             .responsable {
                 color: $dark2;
             }
+        }
+    }
+}
 
+.modal {
+    display: none;
+    transition: opacity 0.3s ease!important;
+
+    &.active {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.3);
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        filter: drop-shadow(0px 15px 43px rgba(0, 0, 0, 0.3));
+
+        p {
+            color: rgb(131, 3, 3);
+            font-weight: 500;
+        }
+
+        #form-bug {
+            position: absolute;
+            background-color: #fff;
+            padding: 1em 0.5em;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2em;
+            width: 25em;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            z-index: 101;
+
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                width: 90%;
+                gap: 5px;
+
+                label {
+                    font-weight: 500;
+                }
+
+                input {
+                    border: none;
+                    border: 2px solid #c2c2c2;
+                    padding: 8px;
+                    border-radius: 8px;
+                    font-family: roboto;
+
+                    &:focus {
+                        border: 2px solid $dark!important;
+                        outline: none;
+                    }
+                }
+
+                select {
+                    border: none;
+                    padding: 8px;
+                    border-radius: 8px;
+                    background-color: $gray87;
+                }
+            }
+
+            .btn-row {
+                display: flex;
+                justify-content: flex-end;
+                width: 90%;
+                gap: 5px;
+
+                button {
+                    padding: 10px 20px;
+                    border: none;
+                    cursor: pointer;
+                    font-weight: 600;
+                    border-radius: 8px;
+
+                    &.primary {
+                        background-color: $dark;
+                        color: #fff;
+                    }
+
+                    &.secondary {
+                        background-color: rgb(238, 236, 236);
+                        color: #000;
+                    }
+                }
+            }
         }
     }
 }
