@@ -4,42 +4,46 @@ const bugs = [
         name: "La aplicación no se conecta a una base de datos, por lo que tiene que ser hardcodeada",
         project: "Bug Tracker",
         status: "En proceso",
-        due: "17/12/2021",
+        due: new Date("January 30, 2022"),
         responsible: "Manuel Nelson"
     },
     {
         name: "La aplicación no es responsive",
         project: "Bug Tracker",
         status: "Pendiente",
-        due: "2022-01-31",
+        due: new Date("February 02, 2022"),
         responsible: "Manuel Nelson"
     },
     {
         name: "Todavía no hay modals para agregar un bug, sacar cuanto antes el form del sidebar",
         project: "Bug Tracker",
         status: "Pendiente",
-        due: "2022-01-31",
+        due: new Date("February 12, 2022"),
         responsible: "Manuel Nelson"
     },
     {
         name: "Crear layout y hardcodear, para probar UI",
         project: "Bug Tracker",
         status: "Resuelto",
-        due: "2022-01-28",
+        due: new Date("February 10, 2022"),
         responsible: "Manuel Nelson"
     },
     {
         name: "Entregar proyecto final",
         project: "miTask",
         status: "Urgente",
-        due: "2022-01-31",
+        due: new Date("March 02, 2022"),
         responsible: "Manuel Nelson"
     }
 ];
 const closed = bugs.filter((bug) => bug.status === 'Resuelto');
 const urgents = bugs.filter((bug) => bug.status === 'Urgente');
-
+let tomorrow = [];
 const modalBug = document.getElementById('bug-modal');
+
+const today = new Date("February 9, 2022");
+const seconds = 86400000;
+
 
 class Bug {
     constructor(name, project, status, due, responsible) {
@@ -78,7 +82,7 @@ const fetchBugs = () => {
         <td class="status">
             <div class="estado ${bug.status}">${bug.status}</div>
         </td>
-        <td class="date">${bug.due}</td>
+        <td class="date">${bug.due.toLocaleDateString()}</td>
         <td class="responsable">${bug.responsible}</td>
         </tr>
         `
@@ -152,10 +156,23 @@ const fetchUrgentBugs = () => {
     urgents.length > 1 ? urgentes.innerHTML = 'Urgentes' : urgentes.innerHTML = 'Urgente';
 };
 
+//Contabiliza los bugs para manana
+const fetchDueTomorrow = () => {
+    bugs.forEach((bug) => {
+        const resultTomorrow = (bug.due - today) / seconds;
+        if(resultTomorrow === 1) {
+            tomorrow.push(bug)
+        }
+    })
+    document.getElementById('tomorrow-bugs').innerHTML = '';
+    document.getElementById('tomorrow-bugs').innerHTML = tomorrow.length;
+}
+
 const fetchResults = () => {
     fetchTotalBugs();
     fetchClosedBugs();
     fetchUrgentBugs();
+    fetchDueTomorrow();
 }
 
 //Filtrado de Bugs cuando doy click
@@ -169,7 +186,7 @@ const filterBugs = (array) => {
             <td class="status">
                 <div class="estado ${bug.status}">${bug.status}</div>
             </td>
-            <td class="date">${bug.due}</td>
+            <td class="date">${bug.due.toLocaleDateString()}</td>
             <td class="responsable">${bug.responsible}</td>
             </tr>
             `
