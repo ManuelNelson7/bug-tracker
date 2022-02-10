@@ -157,6 +157,7 @@ const fetchUrgentBugs = () => {
 };
 
 //Contabiliza los bugs para manana
+//Error en esta funcion: cada vez que se ejecuta, concatena el valor con los anteriores, no se renueva.
 const fetchDueTomorrow = () => {
     bugs.forEach((bug) => {
         const resultTomorrow = (bug.due - today) / seconds;
@@ -204,3 +205,5 @@ const openBug = () => {
 const cancelBug = () => {
     modalBug.classList.remove('active');
 }
+
+//Buscar bug
