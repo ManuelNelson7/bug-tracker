@@ -11,7 +11,7 @@
 </head>
 
 
-<body onload="fetchData()">
+<body>
 
     <div class="modal" id="bug-modal">
         <form id="form-bug" action="">
@@ -51,7 +51,7 @@
             </div>
 
             <div class="btn-row">
-                <button onclick="cancelBug()" class="secondary">Cancelar</button>
+                <button id="cancel-btn" class="secondary">Cancelar</button>
                 <button class="primary" onclick="addBug()">Agregar</button>
             </div>
         </form>
@@ -74,7 +74,7 @@
 
 
                 <ul class="project-list">
-                    <span class="project-selected">Todos los proyectos</span>
+                    <span onclick="fetchData()" class="project-selected">Todos los proyectos</span>
                     <ul id='project-list'>
                     </ul>
                 </ul>
@@ -90,7 +90,7 @@
     <header>
         <div class="container" id="header-container">
             <h1>Mis Bugs</h1>
-            <div onclick="openBug()" class="btn dark2">Agregar Bug</div>
+            <div id="open-btn" class="btn dark2">Agregar Bug</div>
         </div>
     </header>
 
@@ -114,8 +114,8 @@
                     <p id="urgentes"></p>
                 </div>
 
-                <div class="result yellow">
-                    <span id="tomorrow-bugs">2</span>
+                <div onclick="filterDueTomorrow()" class="result yellow">
+                    <span id="tomorrow-bugs"></span>
                     <p>Para mañana</p>
                 </div>
 
@@ -129,7 +129,7 @@
                 <thead>
                     <th id="bug-cell">Bug</th>
                     <th>Estado</th>
-                    <th>Fecha de entrega</th>
+                    <th>Fecha de entrega <i id="sort-date" class="fas fa-sort-amount-down"></i></i></th>
                     <th>Responsable</th>
                 </thead>
                 </th>
