@@ -454,6 +454,44 @@ main {
 
 .container table tbody .bug-name {
   font-weight: 500;
+  width: 58%;
+}
+
+.container table tbody .bug-name .name-input {
+  border: none;
+  width: 100%;
+}
+
+.container table tbody .bug-name .name-input::-webkit-input-placeholder {
+  font-family: roboto;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: black;
+  opacity: 1;
+}
+
+.container table tbody .bug-name .name-input:-ms-input-placeholder {
+  font-family: roboto;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: black;
+  opacity: 1;
+}
+
+.container table tbody .bug-name .name-input::-ms-input-placeholder {
+  font-family: roboto;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: black;
+  opacity: 1;
+}
+
+.container table tbody .bug-name .name-input::placeholder {
+  font-family: roboto;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: black;
+  opacity: 1;
 }
 
 .container table tbody .date {

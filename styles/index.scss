@@ -353,6 +353,20 @@ main {
 
             .bug-name {
                 font-weight: 500;
+                width: 58%;
+
+                .name-input {
+                    border: none;
+                    width: 100%;
+
+                    &::placeholder {
+                        font-family: roboto;
+                        font-weight: 500;
+                        font-size: 1.2em;
+                        color: black;
+                        opacity: 1;
+                    }
+                }
             }
 
             .date {

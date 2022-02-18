@@ -59,7 +59,7 @@
     </div>
 
     <div id="modal-status" class="modal edit">
-        <form class="form" action="">
+        <form id="form-status" class="form" action="">
             <i class="fas fa-times cancel-btn"></i>
             <div class="form-group">
                 <label>Nuevo estado</label>
@@ -147,7 +147,7 @@
                 <thead>
                     <th id="bug-cell">Bug</th>
                     <th>Estado</th>
-                    <th id="due-header">Fecha de entrega <i id="sort-date" class="fas fa-sort-amount-down"></i></i></th>
+                    <th id="due-header">Fecha de entrega <i id="sort-date" class="fas fa-sort"></i></i></th>
                     <th>Responsable</th>
                     <th></th>
                 </thead>
@@ -161,6 +161,7 @@
     </main>
 
     <script src="./js/main.js"></script>
+    <script src="https://chancejs.com/chance.min.js"></script>
 </body>
 
 </html>
