@@ -250,7 +250,7 @@ const filterDueTomorrow = () => filterBugs(tomorrow)
 
 //Filtra los bugs por proyecto
 const getProject = (event) => {
-    const  elements= document.querySelectorAll('.project-selected'); // Array
+    const elements = document.querySelectorAll('.project-selected'); // Array
     elements.forEach(element => element.classList.toggle('project-selected'));
 
     const projectClicked = event.target.id;

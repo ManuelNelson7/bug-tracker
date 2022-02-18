@@ -70,6 +70,15 @@ const addClick = (id, func) => { //Ejecuta una función cuando el elemento es cl
     document.getElementById(id).addEventListener('click', func);
 }
 
+const openModal = (modal) => {
+    document.getElementById(modal).classList.add('active');
+}
+
+// const deleteBug = () => {
+//     const elements = document.querySelectorAll('#trash')
+//     console.log(elements);
+//     elements.forEach(element => console.log(elements.);
+// }
 
 
 const urgents = filterBugs('Urgente');
@@ -89,6 +98,23 @@ class Bug {
         this.due = due;
         this.responsible = responsible;
     }
+
+    editName(newName) {
+        this.name = newName;
+    }
+
+    editStatus(newStatus) {
+        this.status = newStatus;
+    }
+
+    editDue(newDue) {
+        this.due = newDue;
+    }
+
+    editResponsible(newResponsible) {
+        this.responsible = newResponsible;
+    }
+
 };
 
 
@@ -116,10 +142,11 @@ const fetchBugs = () => {
         bugTable.innerHTML += `<tr>
         <td class="bug-name">${bug.name}</td>
         <td class="status">
-            <div class="estado ${bug.status}">${bug.status}</div>
+            <div onclick="openModal('modal-status')" class="estado ${bug.status}">${bug.status}</div>
         </td>
         <td class="date">${new Date(bug.due).toLocaleString()}</td>
         <td class="responsable">${bug.responsible}</td>
+        <td id="trash" onclick="deleteBug()"><i class="fas fa-trash"></i></td>
         </tr>
         `
     })
@@ -285,9 +312,11 @@ const openModalBug = () => {
 addClick('open-btn', openModalBug);
 
 //Cerrar modal bug
-let cancelBtn = document.getElementById('cancel-btn');
-cancelBtn.onclick = () => { modalBug.classList.remove('active') };
-
+const closeBtns = document.querySelectorAll('.cancel-btn');
+const modals = document.querySelectorAll('.modal');
+closeBtns.forEach(btn => {
+    btn.onclick = () => { modals.forEach(modal => { modal.classList.remove('active') }) };
+})
 
 //Sort por fecha---------------------------------------------------
 let sortBtn = document.getElementById('sort-date');

@@ -14,7 +14,7 @@
 <body>
 
     <div class="modal" id="bug-modal">
-        <form id="form-bug" action="">
+        <form class="form" id="form-bug" action="">
             <div class="form-group">
                 <label for="bug-name">Bug</label>
                 <input id="bug-name" type="text" placeholder="Nombre del bug" required>
@@ -51,11 +51,29 @@
             </div>
 
             <div class="btn-row">
-                <button id="cancel-btn" class="secondary">Cancelar</button>
+                <button class="secondary cancel-btn">Cancelar</button>
                 <button class="primary" id="add-bug">Agregar</button>
             </div>
         </form>
 
+    </div>
+
+    <div id="modal-status" class="modal edit">
+        <form class="form" action="">
+            <i class="fas fa-times cancel-btn"></i>
+            <div class="form-group">
+                <label>Nuevo estado</label>
+                <select name="new-status" id="new-status">
+                    <option class="Pendiente" value="Pendiente">Pendiente</option>
+                    <option class="En proceso" value="En proceso">En proceso</option>
+                    <option class="Urgente" value="Urgente">Urgente</option>
+                    <option class="Resuelto" value="Resuelto">Resuelto</option>
+                </select>
+            </div>
+            <div class="btn-edit">
+                <button class="primary" id="edit-status">Agregar</button>
+            </div>
+        </form>
     </div>
 
     <nav id="sidebar">
@@ -129,8 +147,9 @@
                 <thead>
                     <th id="bug-cell">Bug</th>
                     <th>Estado</th>
-                    <th>Fecha de entrega <i id="sort-date" class="fas fa-sort-amount-down"></i></i></th>
+                    <th id="due-header">Fecha de entrega <i id="sort-date" class="fas fa-sort-amount-down"></i></i></th>
                     <th>Responsable</th>
+                    <th></th>
                 </thead>
                 </th>
                 <tbody id="bug-table">
