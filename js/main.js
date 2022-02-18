@@ -298,18 +298,26 @@ let sortBtn = document.getElementById('sort-date');
 let statusDate = 3;
 
 //Ordenar bugs por fecha (menor a mayor)
-const sortDate1 = () => {
-    const sortedBugs1 = bugs.sort((a, b) => a.due - b.due);
-    renderBugs(sortedBugs1);
-    statusDate = 1;
+
+const sortDate = (orden) => {
+    const sortedBugs1 = Object.assign([], bugs);
+
+    if (orden === 1) {
+        sortedBugs1.sort((a, b) => a.due - b.due);
+        renderBugs(sortedBugs1);
+        statusDate = 2;
+    } else if (orden === 2) {
+        sortedBugs1.sort((a, b) => b.due - a.due);
+        renderBugs(sortedBugs1);
+        statusDate = 3;
+    } else if (orden === 3) {
+        fetchBugs()
+        statusDate = 1;
+    }
+
+
 }
 
-//Ordenar bugs por fecha (mayor a menor)
-const sortDate2 = () => {
-    const sortedBugs2 = bugs.sort((a, b) => b.due - a.due);
-    renderBugs(sortedBugs2);
-    statusDate = 2;
-}
 
 //Ordenar bugs por defecto (Éste no funciona, no recarga con el array original)
 const sortDateOriginal = () => {
@@ -319,17 +327,7 @@ const sortDateOriginal = () => {
 
 //Dependiendo el estado de sortBtn, filtra con los dos métodos y/o vuelve al default
 sortBtn.onclick = () => {
-    switch (statusDate) {
-        case 1:
-            sortDate2();
-            break;
-        case 2:
-            sortDateOriginal();
-            break;
-        case 3:
-            sortDate1();
-            break;
-    }
+    sortDate(statusDate);
     console.log(statusDate);
 };
 
