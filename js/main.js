@@ -36,7 +36,19 @@ const bugs = [
         responsible: "Manuel Nelson"
     }
 ];
-// const bugsJSON = JSON.stringify(bugs);
+
+//LocalStorage
+const bugsLocalStorage = JSON.parse(localStorage.getItem('bugs'));
+let bugsToRender = [];
+
+
+if (bugsLocalStorage && bugsLocalStorage.length > 0) {
+    bugsToRender = bugsLocalStorage; //Si hay bugs en localStorage, asignarlos a bugsTorender
+} else {
+    bugsToRender = bugs; //Sino, bugsToRender es el array original.
+};
+
+console.log(bugsToRender);
 
 const modalBug = document.getElementById('bug-modal');
 const bugTable = document.getElementById('bug-table');
@@ -46,7 +58,7 @@ const seconds = 86400000;
 
 //funciones
 const filterBugs = (status) => {
-    return bugs.filter((bug) => bug.status === status);
+    return bugsToRender.filter((bug) => bug.status === status);
 }
 
 const renderArray = (id, array) => {
@@ -59,10 +71,11 @@ const addClick = (id, func) => { //Ejecuta una función cuando el elemento es cl
 }
 
 
+
 const urgents = filterBugs('Urgente');
 const closed = filterBugs('Resuelto');
-const tomorrow = bugs.filter((bug) => ((bug.due - today) / seconds) == 1);
-const sevenDays = bugs.filter((bug) => ((bug.due - today) / seconds) >= 7);
+const tomorrow = bugsToRender.filter((bug) => ((bug.due - today) / seconds) == 1);
+const sevenDays = bugsToRender.filter((bug) => ((bug.due - today) / seconds) >= 7);
 
 //Pruebas de localStorage
 // const saveLocal = (key, value) => { localStorage.setItem(key, value) };
@@ -77,12 +90,6 @@ class Bug {
         this.responsible = responsible;
     }
 };
-
-//Pruebas de localStorage
-// const savedBugs = JSON.parse(localStorage.getItem('localBugs'));
-// savedBugs.forEach((object) => {
-//     bugs.push(new Bug(object));
-// })
 
 
 // Fetch de los proyectos para mostrarlos en el sidebar
@@ -104,15 +111,6 @@ const fetchProjects = () => {
 // Fetch de los bugs para mostrarlos en la tabla
 const fetchBugs = () => {
     bugTable.innerHTML = '';
-
-    const bugsLocalStorage = JSON.parse(localStorage.getItem('bugs'));
-    let bugsToRender = [];
-
-    if (bugsLocalStorage && bugsLocalStorage.length > 0) {
-        bugsToRender = bugsLocalStorage;
-    } else {
-        bugsToRender = bugs;
-    }
 
     bugsToRender.forEach((bug) => {
         bugTable.innerHTML += `<tr>
@@ -165,9 +163,7 @@ const addBug = () => {
     if (bugName && bugProject && bugStatus && bugDue && bugResponsible) {
         const newBug = new Bug(bugName, bugProject, bugStatus, bugDue, bugResponsible);
         bugs.push(newBug);
-
         localStorage.setItem('bugs', JSON.stringify(bugs));
-
         document.getElementById('form-bug').reset();
         modalBug.classList.remove('active');
         fetchBugs();
@@ -183,9 +179,9 @@ addClick('add-bug', addBug);
 
 //Contabiliza los bugs abiertos
 const fetchTotalBugs = () => {
-    document.getElementById('open-bugs').innerHTML = bugs.length;
+    document.getElementById('open-bugs').innerHTML = bugsToRender.length;
     const abiertos = document.getElementById('abiertos');
-    bugs.length > 1 ? abiertos.innerHTML = 'Bugs abiertos' : abiertos.innerHTML = 'Bug abierto';
+    bugsToRender.length > 1 ? abiertos.innerHTML = 'Bugs abiertos' : abiertos.innerHTML = 'Bug abierto';
 };
 
 //Contabiliza los bugs resueltos
@@ -231,7 +227,7 @@ const renderBugs = (array) => {
             <td class="status">
                 <div class="estado ${bug.status}">${bug.status}</div>
             </td>
-            <td class="date">${bug.due.toLocaleDateString()}</td>
+            <td class="date">${new Date(bug.due).toLocaleString()}</td>
             <td class="responsable">${bug.responsible}</td>
             </tr>
             `
@@ -263,7 +259,7 @@ const getProject = (event) => {
 
     const projectClicked = event.target.id;
     event.target.classList.add('project-selected')
-    const projectFiltered = bugs.filter((bug) => bug.project === `${projectClicked}`);
+    const projectFiltered = bugsToRender.filter((bug) => bug.project === `${projectClicked}`);
     const filterByProject = () => renderBugs(projectFiltered);
 
     if (projectFiltered != "") {
@@ -300,22 +296,20 @@ let statusDate = 3;
 //Ordenar bugs por fecha (menor a mayor)
 
 const sortDate = (orden) => {
-    const sortedBugs1 = Object.assign([], bugs);
+    const sortedBugs = Object.assign([], bugsToRender);
 
     if (orden === 1) {
-        sortedBugs1.sort((a, b) => a.due - b.due);
+        const sortedBugs1 = sortedBugs.sort((a, b) => a.due - b.due);
         renderBugs(sortedBugs1);
         statusDate = 2;
     } else if (orden === 2) {
-        sortedBugs1.sort((a, b) => b.due - a.due);
-        renderBugs(sortedBugs1);
+        const sortedBugs2 = sortedBugs.sort((a, b) => b.due - a.due);
+        renderBugs(sortedBugs2);
         statusDate = 3;
     } else if (orden === 3) {
         fetchBugs()
         statusDate = 1;
     }
-
-
 }
 
 
