@@ -274,7 +274,7 @@ nav .sidebar-container .projects .project-list {
       -ms-flex-direction: column;
           flex-direction: column;
   list-style: none;
-  gap: 0.8em;
+  gap: 1.2em;
   cursor: pointer;
 }
 
@@ -286,17 +286,13 @@ nav .sidebar-container .projects .project-list ul {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  gap: 0.8em;
+  gap: 1.2em;
   list-style: none;
 }
 
 nav .sidebar-container .projects .project-list li {
   -webkit-transition: ease-in-out 0.2s;
   transition: ease-in-out 0.2s;
-}
-
-nav .sidebar-container .projects .project-list li:hover {
-  color: #bfedd9;
 }
 
 nav .sidebar-container #form-bug {

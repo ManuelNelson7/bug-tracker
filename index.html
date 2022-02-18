@@ -52,7 +52,7 @@
 
             <div class="btn-row">
                 <button id="cancel-btn" class="secondary">Cancelar</button>
-                <button class="primary" onclick="addBug()">Agregar</button>
+                <button class="primary" id="add-bug">Agregar</button>
             </div>
         </form>
 
@@ -69,12 +69,12 @@
             <div class="projects">
                 <div class="project-header">
                     <span class="text-70">Proyectos</span>
-                    <i id="add-project" onclick="addProject()" class="fas fa-plus"></i>
+                    <i id="add-project" class="fas fa-plus"></i>
                 </div>
 
 
                 <ul class="project-list">
-                    <span onclick="fetchData()" class="project-selected">Todos los proyectos</span>
+                    <span id="all-projects" class="project-selected">Todos los proyectos</span>
                     <ul id='project-list'>
                     </ul>
                 </ul>
@@ -99,27 +99,27 @@
         <div class="container">
             <div class="results">
 
-                <div onclick="fetchBugs()" class="result blue">
+                <div id="results-total" class="result blue">
                     <span id="open-bugs"></span>
                     <p id="abiertos"></p>
                 </div>
 
-                <div onclick="filterClosed()" class="result green">
+                <div id="results-closed" class="result green">
                     <span id="closed-bugs"></span>
                     <p id="resueltos"></p>
                 </div>
 
-                <div onclick="filterUrgents()" class="result red">
+                <div id="results-urgent" class="result red">
                     <span id="urgent-bugs"></span>
                     <p id="urgentes"></p>
                 </div>
 
-                <div onclick="filterDueTomorrow()" class="result yellow">
+                <div id="results-tomorrow" class="result yellow">
                     <span id="tomorrow-bugs"></span>
                     <p>Para mañana</p>
                 </div>
 
-                <div class="result light-blue">
+                <div id="results-seven" class="result light-blue">
                     <span id="seven-bugs">0</span>
                     <p>+ 7 días</p>
                 </div>
@@ -142,7 +142,6 @@
     </main>
 
     <script src="./js/main.js"></script>
-    <script src="./js/index.js"></script>
 </body>
 
 </html>

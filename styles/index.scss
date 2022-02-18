@@ -206,21 +206,18 @@ nav {
                 display: flex;
                 flex-direction: column;
                 list-style: none;
-                gap: 0.8em;
+                gap: 1.2em;
                 cursor: pointer;
 
                 ul {
                     display: flex;
                     flex-direction: column;
-                    gap: 0.8em;
+                    gap: 1.2em;
                     list-style: none;
                 }
 
                 li {
                     transition: ease-in-out 0.2s;
-                    &:hover {
-                        color: $green;
-                    }
                 }
             }
         }
@@ -328,7 +325,6 @@ main {
                         color: $dark2;
                     }
                 }
-
             }
         }
 
@@ -374,7 +370,7 @@ main {
 
 .modal {
     display: none;
-    transition: opacity 0.3s ease!important;
+    transition: opacity 0.3s ease !important;
 
     &.active {
         display: flex;
@@ -425,7 +421,7 @@ main {
                     font-family: roboto;
 
                     &:focus {
-                        border: 2px solid $dark!important;
+                        border: 2px solid $dark !important;
                         outline: none;
                     }
                 }
