@@ -144,7 +144,7 @@ const fetchBugs = () => {
 
     bugsToRender.forEach((bug) => {
         bugTable.innerHTML += `<tr>
-        <td class="bug-name"><input class="name-input" placeholder="${bug.name}" ></td>
+        <td contenteditable="true" id="${bug.id}" onchange='editName("${bug.id}")' class="bug-name">${bug.name}</td>
         <td class="status">
             <div onclick='editStatus("${bug.id}")' class="estado ${bug.status}">${bug.status}</div>
         </td>
@@ -377,4 +377,14 @@ const editStatus = (id) => {
     })
 
     fetchBugs();
+}
+
+const editName = (id) => {
+    bugsToRender.forEach((bug) => {
+        if(bug.id === id) {
+            bug.name = document.getElementById(`${bug.id}`).innerText;
+            console.log(document.getElementById(`${bug.id}`).innerText);
+            fetchBugs();
+        }
+    })
 }
