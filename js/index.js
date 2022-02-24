@@ -1,3 +1,11 @@
+import {
+    saveBug,
+    getBugs,
+    onSnapshot,
+    collection,
+    db
+} from './firebase.js'
+
 const projects = ['Bug Tracker', 'miTask', 'Backend'];
 const bugs = [
     {
@@ -50,15 +58,11 @@ const fetchLocalBugs = () => {
 let bugsLocalStorage = fetchLocalBugs();
 let bugsToRender = [];
 
-
-
 if (bugsLocalStorage && bugsLocalStorage.length > 0) {
     bugsToRender = bugsLocalStorage; //Si hay bugs en localStorage, asignarlos a bugsTorender
 } else {
     bugsToRender = bugs; //Sino, bugsToRender es el array original.
 };
-
-console.log(bugsToRender);
 
 const modalBug = document.getElementById('bug-modal');
 const bugTable = document.getElementById('bug-table');
@@ -83,13 +87,6 @@ const addClick = (id, func) => { //Ejecuta una función cuando el elemento es cl
 const openModal = (modal) => {
     document.getElementById(modal).classList.add('active');
 }
-
-// const deleteBug = () => {
-//     const elements = document.querySelectorAll('#trash')
-//     console.log(elements);
-//     elements.forEach(element => console.log(elements.);
-// }
-
 
 const urgents = filterBugs('Urgente');
 const closed = filterBugs('Resuelto');
@@ -139,22 +136,31 @@ const fetchProjects = () => {
 };
 
 // Fetch de los bugs para mostrarlos en la tabla
-const fetchBugs = () => {
+const fetchBugs = async () => {
     bugTable.innerHTML = '';
 
-    bugsToRender.forEach((bug) => {
-        bugTable.innerHTML += `<tr>
-        <td contenteditable="true" id="${bug.id}" onchange='editName("${bug.id}")' class="bug-name">${bug.name}</td>
-        <td class="status">
-            <div onclick='editStatus("${bug.id}")' class="estado ${bug.status}">${bug.status}</div>
-        </td>
-        <td class="date">${new Date(bug.due).toLocaleDateString()}</td>
-        <td class="responsable">${bug.responsible}</td>
-        <td id="trash" onclick="deleteBug()"><i class="fas fa-trash"></i></td>
-        </tr>
-        `
+    onSnapshot(collection(db, 'bugs'), (querySnapshot) => {
+        querySnapshot.forEach(doc => {
+            const bug = doc.data();
+            due = bug.due.toDate().toLocaleDateString()
+            bugTable.innerHTML += '';
+
+            bugTable.innerHTML += `<tr>
+            <td contenteditable="true" id="${bug.id}" onchange='editName("${bug.id}")' class="bug-name">${bug.name}</td>
+            <td class="status">
+                <div onclick='editStatus("${bug.id}")' class="estado ${bug.status}">${bug.status}</div>
+            </td>
+            <td class="date">${due}</td>
+            <td class="responsable">${bug.responsible}</td>
+            <td id="trash" onclick="deleteBug()"><i class="fas fa-trash"></i></td>
+            </tr>
+            `
+        })
+
     })
-    fetchResults();
+
+
+    //fetchResults();
 };
 addClick('all-projects', fetchBugs)
 
@@ -163,7 +169,8 @@ const fetchData = () => {
     fetchBugs();
     fetchProjects();
 };
-window.addEventListener('DOMContentLoaded', e => {
+
+window.addEventListener('DOMContentLoaded', async () => {
     fetchData();
 })
 
@@ -193,14 +200,11 @@ const addBug = () => {
 
     //Si los campos están llenos, crea un nuevo Bug y lo añade al array
     if (bugName && bugProject && bugStatus && bugDue && bugResponsible) {
-        const newBug = new Bug(bugId, bugName, bugProject, bugStatus, bugDue, bugResponsible);
-        bugs.push(newBug);
-        localStorage.setItem('bugs', JSON.stringify(bugs));
+        saveBug(bugName, bugProject, bugStatus, bugDue, bugResponsible);
         document.getElementById('form-bug').reset();
         modalBug.classList.remove('active');
-        fetchLocalBugs();
         fetchBugs();
-        fetchResults();
+        //fetchResults();
     } else {
         alertBug.innerHTML = 'Por favor, rellena todos los campos'
     };
@@ -210,6 +214,7 @@ addClick('add-bug', addBug);
 
 //Conteo de Bugs
 
+/**
 //Contabiliza los bugs abiertos
 const fetchTotalBugs = () => {
     document.getElementById('open-bugs').innerHTML = bugsToRender.length;
@@ -249,6 +254,8 @@ const fetchResults = () => {
     fetchDueTomorrow();
     fetchSevenDays();
 }
+
+*/
 
 //Filtrado de Bugs cuando doy click
 const renderBugs = (array) => {
@@ -381,7 +388,7 @@ const editStatus = (id) => {
 
 const editName = (id) => {
     bugsToRender.forEach((bug) => {
-        if(bug.id === id) {
+        if (bug.id === id) {
             bug.name = document.getElementById(`${bug.id}`).innerText;
             console.log(document.getElementById(`${bug.id}`).innerText);
             fetchBugs();
