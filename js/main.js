@@ -38,17 +38,9 @@ const bugs = [
 ];
 
 //LocalStorage
-const bugsLocalStorage = JSON.parse(localStorage.getItem('bugs'));
-let bugsToRender = [];
+const bugsLocalStorage = JSON.parse(localStorage.getItem('bugs')) || [];
 
-
-if (bugsLocalStorage && bugsLocalStorage.length > 0) {
-    bugsToRender = bugsLocalStorage; //Si hay bugs en localStorage, asignarlos a bugsTorender
-} else {
-    bugsToRender = bugs; //Sino, bugsToRender es el array original.
-};
-
-console.log(bugsToRender);
+console.log(bugs);
 
 const modalBug = document.getElementById('bug-modal');
 const bugTable = document.getElementById('bug-table');
@@ -58,7 +50,7 @@ const seconds = 86400000;
 
 //funciones
 const filterBugs = (status) => {
-    return bugsToRender.filter((bug) => bug.status === status);
+    return bugs.filter((bug) => bug.status === status);
 }
 
 const renderArray = (id, array) => {
@@ -83,8 +75,8 @@ const openModal = (modal) => {
 
 const urgents = filterBugs('Urgente');
 const closed = filterBugs('Resuelto');
-const tomorrow = bugsToRender.filter((bug) => ((bug.due - today) / seconds) == 1);
-const sevenDays = bugsToRender.filter((bug) => ((bug.due - today) / seconds) >= 7);
+const tomorrow = bugs.filter((bug) => ((bug.due - today) / seconds) == 1);
+const sevenDays = bugs.filter((bug) => ((bug.due - today) / seconds) >= 7);
 
 //Pruebas de localStorage
 // const saveLocal = (key, value) => { localStorage.setItem(key, value) };
@@ -135,10 +127,12 @@ const fetchProjects = () => {
 };
 
 // Fetch de los bugs para mostrarlos en la tabla
+console.log(bugs);
+
 const fetchBugs = () => {
     bugTable.innerHTML = '';
 
-    bugsToRender.forEach((bug) => {
+    bugs.forEach((bug) => {
         bugTable.innerHTML += `<tr>
         <td class="bug-name">${bug.name}</td>
         <td class="status">
@@ -206,9 +200,9 @@ addClick('add-bug', addBug);
 
 //Contabiliza los bugs abiertos
 const fetchTotalBugs = () => {
-    document.getElementById('open-bugs').innerHTML = bugsToRender.length;
+    document.getElementById('open-bugs').innerHTML = bugs.length;
     const abiertos = document.getElementById('abiertos');
-    bugsToRender.length > 1 ? abiertos.innerHTML = 'Bugs abiertos' : abiertos.innerHTML = 'Bug abierto';
+    bugs.length > 1 ? abiertos.innerHTML = 'Bugs abiertos' : abiertos.innerHTML = 'Bug abierto';
 };
 
 //Contabiliza los bugs resueltos
@@ -286,7 +280,7 @@ const getProject = (event) => {
 
     const projectClicked = event.target.id;
     event.target.classList.add('project-selected')
-    const projectFiltered = bugsToRender.filter((bug) => bug.project === `${projectClicked}`);
+    const projectFiltered = bugs.filter((bug) => bug.project === `${projectClicked}`);
     const filterByProject = () => renderBugs(projectFiltered);
 
     if (projectFiltered != "") {
@@ -325,7 +319,7 @@ let statusDate = 3;
 //Ordenar bugs por fecha (menor a mayor)
 
 const sortDate = (orden) => {
-    const sortedBugs = Object.assign([], bugsToRender);
+    const sortedBugs = Object.assign([], bugs);
 
     if (orden === 1) {
         const sortedBugs1 = sortedBugs.sort((a, b) => a.due - b.due);
