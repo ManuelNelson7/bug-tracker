@@ -1,6 +1,7 @@
 const projects = ['Bug Tracker', 'miTask', 'Backend'];
 const bugs = [
     {
+        id: "2b37c8b2-c128-547b-a51b-b32be2a7958a",
         name: "La aplicación no se conecta a una base de datos, por lo que tiene que ser hardcodeada",
         project: "Bug Tracker",
         status: "En proceso",
@@ -8,6 +9,7 @@ const bugs = [
         responsible: "Manuel Nelson"
     },
     {
+        id: "2b37c8b2-c128-547b-a51b-b33be2a7958a",
         name: "La aplicación no es responsive",
         project: "Bug Tracker",
         status: "Pendiente",
@@ -15,6 +17,7 @@ const bugs = [
         responsible: "Manuel Nelson"
     },
     {
+        id: "2b37c8b2-c128-547b-a51b-b35be2a7958a",
         name: "Todavía no hay modals para agregar un bug, sacar cuanto antes el form del sidebar",
         project: "Bug Tracker",
         status: "Pendiente",
@@ -22,6 +25,7 @@ const bugs = [
         responsible: "Manuel Nelson"
     },
     {
+        id: "2b37c8b2-c128-547b-a51b-b336e2a7958a",
         name: "Crear layout y hardcodear, para probar UI",
         project: "Bug Tracker",
         status: "Resuelto",
@@ -29,6 +33,7 @@ const bugs = [
         responsible: "Manuel Nelson"
     },
     {
+        id: "2b37c8b2-c128-547b-251b-b33be2a7958a",
         name: "Entregar proyecto final",
         project: "miTask",
         status: "Urgente",
@@ -38,9 +43,9 @@ const bugs = [
 ];
 
 //LocalStorage
-const bugsLocalStorage = JSON.parse(localStorage.getItem('bugs')) || [];
+const bugsToRender = JSON.parse(localStorage.getItem('bugs')) || bugs;
 
-console.log(bugs);
+console.log(bugsToRender);
 
 const modalBug = document.getElementById('bug-modal');
 const bugTable = document.getElementById('bug-table');
@@ -50,7 +55,7 @@ const seconds = 86400000;
 
 //funciones
 const filterBugs = (status) => {
-    return bugs.filter((bug) => bug.status === status);
+    return bugsToRender.filter((bug) => bug.status === status);
 }
 
 const renderArray = (id, array) => {
@@ -75,15 +80,16 @@ const openModal = (modal) => {
 
 const urgents = filterBugs('Urgente');
 const closed = filterBugs('Resuelto');
-const tomorrow = bugs.filter((bug) => ((bug.due - today) / seconds) == 1);
-const sevenDays = bugs.filter((bug) => ((bug.due - today) / seconds) >= 7);
+const tomorrow = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) == 1);
+const sevenDays = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) >= 7);
 
 //Pruebas de localStorage
 // const saveLocal = (key, value) => { localStorage.setItem(key, value) };
 // saveLocal("localBugs", JSON.stringify(bugs));
 
 class Bug {
-    constructor(name, project, status, due, responsible) {
+    constructor(id, name, project, status, due, responsible) {
+        this.id = id;
         this.name = name;
         this.project = project;
         this.status = status;
@@ -132,13 +138,13 @@ console.log(bugs);
 const fetchBugs = () => {
     bugTable.innerHTML = '';
 
-    bugs.forEach((bug) => {
+    bugsToRender.forEach((bug) => {
         bugTable.innerHTML += `<tr>
         <td class="bug-name">${bug.name}</td>
         <td class="status">
             <div onclick="openModal('modal-status')" class="estado ${bug.status}">${bug.status}</div>
         </td>
-        <td class="date">${new Date(bug.due).toLocaleString()}</td>
+        <td class="date">${new Date(bug.due).toLocaleDateString()}</td>
         <td class="responsable">${bug.responsible}</td>
         <td id="trash" onclick="deleteBug()"><i class="fas fa-trash"></i></td>
         </tr>
@@ -171,8 +177,12 @@ const addProject = () => {
 
 addClick('add-project', addProject);
 
+
+
+
 // Crea un Bug
 const addBug = () => {
+    const bugId = chance.guid();
     const bugName = document.getElementById('bug-name').value;
     const bugProject = document.getElementById('projects-options').value;
     const bugStatus = document.getElementById('status').value;
@@ -182,9 +192,10 @@ const addBug = () => {
 
     //Si los campos están llenos, crea un nuevo Bug y lo añade al array
     if (bugName && bugProject && bugStatus && bugDue && bugResponsible) {
-        const newBug = new Bug(bugName, bugProject, bugStatus, bugDue, bugResponsible);
+        const newBug = new Bug(bugId, bugName, bugProject, bugStatus, bugDue, bugResponsible);
         bugs.push(newBug);
         localStorage.setItem('bugs', JSON.stringify(bugs));
+        bugsToRender = JSON.parse(localStorage.getItem('bugs'));
         document.getElementById('form-bug').reset();
         modalBug.classList.remove('active');
         fetchBugs();
@@ -200,9 +211,9 @@ addClick('add-bug', addBug);
 
 //Contabiliza los bugs abiertos
 const fetchTotalBugs = () => {
-    document.getElementById('open-bugs').innerHTML = bugs.length;
+    document.getElementById('open-bugs').innerHTML = bugsToRender.length;
     const abiertos = document.getElementById('abiertos');
-    bugs.length > 1 ? abiertos.innerHTML = 'Bugs abiertos' : abiertos.innerHTML = 'Bug abierto';
+    bugsToRender.length > 1 ? abiertos.innerHTML = 'Bugs abiertos' : abiertos.innerHTML = 'Bug abierto';
 };
 
 //Contabiliza los bugs resueltos
@@ -280,7 +291,7 @@ const getProject = (event) => {
 
     const projectClicked = event.target.id;
     event.target.classList.add('project-selected')
-    const projectFiltered = bugs.filter((bug) => bug.project === `${projectClicked}`);
+    const projectFiltered = bugsToRender.filter((bug) => bug.project === `${projectClicked}`);
     const filterByProject = () => renderBugs(projectFiltered);
 
     if (projectFiltered != "") {
@@ -319,10 +330,10 @@ let statusDate = 3;
 //Ordenar bugs por fecha (menor a mayor)
 
 const sortDate = (orden) => {
-    const sortedBugs = Object.assign([], bugs);
+    const sortedBugs = Object.assign([], bugsToRender);
 
     if (orden === 1) {
-        const sortedBugs1 = sortedBugs.sort((a, b) => a.due - b.due);
+        const sortedBugs1 = sortedBugs.sort((a, b) => new Date(a.due) - new Date(b.due));
         renderBugs(sortedBugs1);
         statusDate = 2;
     } else if (orden === 2) {
