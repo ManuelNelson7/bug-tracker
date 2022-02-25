@@ -123,7 +123,7 @@ hr {
 }
 
 .project-selected {
-  color: #bfedd9;
+  color: #57ddf5;
   font-weight: 600;
 }
 
@@ -258,7 +258,7 @@ nav .sidebar-container .projects .project-header {
           align-items: center;
 }
 
-nav .sidebar-container .projects .project-header #add-project {
+nav .sidebar-container .projects .project-header #plus {
   margin-right: 10px;
   font-size: 1.1em;
   cursor: pointer;
@@ -435,7 +435,22 @@ main {
   margin-top: 1em;
 }
 
+.container table tbody tr {
+  -webkit-transition: 0;
+  transition: 0;
+  cursor: move;
+}
+
+.container table tbody tr.selected {
+  background-color: #e2e2e2;
+}
+
+.container table tbody tr.dragged {
+  opacity: 0;
+}
+
 .container table tbody td {
+  background-color: white;
   border-bottom: 2px solid rgba(183, 183, 183, 0.5);
   padding: 20px 1.5em 20px 0;
 }

@@ -42,21 +42,53 @@ const bugs = [
     }
 ];
 
+let theme = JSON.parse(localStorage.getItem('theme'));
+
 //LocalStorage
 const bugsToRender = JSON.parse(localStorage.getItem('bugs')) || bugs;
 const projectsToRender = JSON.parse(localStorage.getItem('projects')) || projects;
 
-console.log(bugsToRender);
 
+//Nodos y constantes
 const modalBug = document.getElementById('bug-modal');
 const bugTable = document.getElementById('bug-table');
-
 const today = new Date("February 9, 2022");
 const seconds = 86400000;
+
+//Drag and drop
+Sortable.create(bugTable, {
+    animation: 200,
+    draggable: "tr",
+    chosenClass: "selected",
+    dragClass: "dragged",
+
+});
 
 //funciones
 const filterBugs = (status) => {
     return bugsToRender.filter((bug) => bug.status === status);
+}
+
+console.log('Bugs to render 1', bugsToRender);
+
+const setStatus = (id) => {
+    const newStatus = document.getElementById('new-status').value;
+    bugsToRender.forEach(bug => {
+        bug.id === id && (bug.status = newStatus);
+    })
+    document.getElementById('modal-status').classList.remove('active');
+    localStorage.setItem('bugs', JSON.stringify(bugsToRender));
+    fetchBugs();
+    fetchResults();
+}
+
+const deleteBug = (id) => {
+    for (let i = 0; i < bugsToRender.length; i++) {
+        bugsToRender[i].id === id && (bugsToRender.splice(i, 1));
+    }
+    localStorage.setItem('bugs', JSON.stringify(bugsToRender));
+    fetchBugs();
+    fetchResults();
 }
 
 const renderArray = (id, array) => {
@@ -72,17 +104,20 @@ const openModal = (modal) => {
     document.getElementById(modal).classList.add('active');
 }
 
-// const deleteBug = () => {
-//     const elements = document.querySelectorAll('#trash')
-//     console.log(elements);
-//     elements.forEach(element => console.log(elements.);
-// }
+const openStatus = (id) => {
+    document.getElementById('modal-status').classList.add('active');
+    console.log(id);
+    document.getElementById('edit-status').addEventListener("click", (e) => {
+        e.preventDefault()
+        setStatus(id)
+    });
+}
 
 
 const urgents = filterBugs('Urgente');
 const closed = filterBugs('Resuelto');
-const tomorrow = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) == 1);
-const sevenDays = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) >= 7);
+let tomorrow = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) == 1);
+let sevenDays = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) >= 7);
 
 //Pruebas de localStorage
 // const saveLocal = (key, value) => { localStorage.setItem(key, value) };
@@ -97,23 +132,6 @@ class Bug {
         this.due = due;
         this.responsible = responsible;
     }
-
-    editName(newName) {
-        this.name = newName;
-    }
-
-    editStatus(newStatus) {
-        this.status = newStatus;
-    }
-
-    editDue(newDue) {
-        this.due = newDue;
-    }
-
-    editResponsible(newResponsible) {
-        this.responsible = newResponsible;
-    }
-
 };
 
 
@@ -134,7 +152,6 @@ const fetchProjects = () => {
 };
 
 // Fetch de los bugs para mostrarlos en la tabla
-console.log(bugs);
 
 const fetchBugs = () => {
     bugTable.innerHTML = '';
@@ -143,11 +160,11 @@ const fetchBugs = () => {
         bugTable.innerHTML += `<tr>
         <td class="bug-name">${bug.name}</td>
         <td class="status">
-            <div onclick="openModal('modal-status')" class="estado ${bug.status}">${bug.status}</div>
+            <div onclick="openStatus('${bug.id}')" class="estado ${bug.status}">${bug.status}</div>
         </td>
         <td class="date">${new Date(bug.due).toLocaleDateString()}</td>
         <td class="responsable">${bug.responsible}</td>
-        <td id="trash" onclick="deleteBug()"><i class="fas fa-trash"></i></td>
+        <td id="trash" onclick="deleteBug('${bug.id}')"><i class="fas fa-trash"></i></td>
         </tr>
         `
     })
@@ -160,9 +177,6 @@ const fetchData = () => {
     fetchBugs();
     fetchProjects();
 };
-window.addEventListener('DOMContentLoaded', e => {
-    fetchData();
-})
 
 document.getElementById('form-projects').addEventListener("submit", (e) => {
     e.preventDefault()
@@ -187,9 +201,6 @@ document.getElementById('plus').addEventListener('click', () => {
     openModal('modal-project')
     addClick('add-project', addProject)
 });
-
-
-
 
 // Crea un Bug
 const addBug = () => {
@@ -269,8 +280,9 @@ const renderBugs = (array) => {
             <td class="status">
                 <div class="estado ${bug.status}">${bug.status}</div>
             </td>
-            <td class="date">${new Date(bug.due).toLocaleString()}</td>
+            <td class="date">${new Date(bug.due).toLocaleDateString()}</td>
             <td class="responsable">${bug.responsible}</td>
+            <td id="trash" onclick="deleteBug()"><i class="fas fa-trash"></i></td>
             </tr>
             `
     })
@@ -292,15 +304,13 @@ addClick('results-tomorrow', filterDueTomorrow);
 const filterSevenDays = () => renderBugs(sevenDays);
 addClick('results-seven', filterSevenDays);
 
-
-
 //Filtra los bugs por proyecto
 const getProject = (event) => {
     const elements = document.querySelectorAll('.project-selected');
-    elements.forEach(element => element.classList.toggle('project-selected'));
+    elements.forEach(element => element.classList.remove('project-selected'));
 
     const projectClicked = event.target.id;
-    event.target.classList.add('project-selected')
+    event.target.classList.add('project-selected');
     const projectFiltered = bugsToRender.filter((bug) => bug.project === `${projectClicked}`);
     const filterByProject = () => renderBugs(projectFiltered);
 
@@ -316,9 +326,10 @@ const getProject = (event) => {
     }
 
 }
-document.getElementById('project-list').addEventListener('click', getProject);
-
-
+addClick('project-list', getProject);
+document.getElementById('all-projects').addEventListener('click', () => {
+    document.getElementById('all-projects').classList.toggle('project-selected')
+})
 
 //Abrir modal bug
 const openModalBug = () => {
@@ -335,9 +346,14 @@ closeBtns.forEach(btn => {
 
 //Sort por fecha---------------------------------------------------
 let sortBtn = document.getElementById('sort-date');
-let statusDate = 3;
+let statusDate = 1;
 
 //Ordenar bugs por fecha (menor a mayor)
+
+const toggleIcon = (icon, class1, class2) => {
+    icon.classList.remove(class1);
+    icon.classList.add(class2);
+};
 
 const sortDate = (orden) => {
     const sortedBugs = Object.assign([], bugsToRender);
@@ -346,16 +362,18 @@ const sortDate = (orden) => {
         const sortedBugs1 = sortedBugs.sort((a, b) => new Date(a.due) - new Date(b.due));
         renderBugs(sortedBugs1);
         statusDate = 2;
+        toggleIcon(sortBtn, 'fa-sort', 'fa-sort-amount-down');
     } else if (orden === 2) {
-        const sortedBugs2 = sortedBugs.sort((a, b) => b.due - a.due);
+        const sortedBugs2 = sortedBugs.sort((a, b) => new Date(b.due) - new Date(a.due));
         renderBugs(sortedBugs2);
         statusDate = 3;
+        toggleIcon(sortBtn, 'fa-sort-amount-down', 'fa-sort-amount-up');
     } else if (orden === 3) {
         fetchBugs()
         statusDate = 1;
+        toggleIcon(sortBtn, 'fa-sort-amount-up', 'fa-sort');
     }
 }
-
 
 //Ordenar bugs por defecto (Éste no funciona, no recarga con el array original)
 const sortDateOriginal = () => {
@@ -370,3 +388,29 @@ sortBtn.onclick = () => {
 };
 
 //-------------------------------------------------------------
+//Darkmode
+
+const getTheme = () => {
+    if (theme == false) {
+        document.body.classList.add('dark');
+
+    } if (theme == true) {
+
+        document.body.classList.remove('dark');
+    }
+};
+
+const checkbox = document.getElementById('switch-theme').value;
+
+addClick('switch-theme', () => {
+    theme = !theme;
+    localStorage.setItem('theme', theme);
+    getTheme();
+})
+
+window.addEventListener('DOMContentLoaded', e => {
+    fetchData();
+    getTheme();
+    console.log(theme);
+})
+

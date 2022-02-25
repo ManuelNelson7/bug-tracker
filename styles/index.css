@@ -123,7 +123,7 @@ hr {
 }
 
 .project-selected {
-  color: #bfedd9;
+  color: #57ddf5;
   font-weight: 600;
 }
 
@@ -323,6 +323,78 @@ nav .sidebar-container #form-bug .form-group label {
   font-weight: 500;
 }
 
+nav .sidebar-container .switch-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  bottom: 7em;
+  /* Rounded sliders */
+}
+
+nav .sidebar-container .switch-container .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+nav .sidebar-container .switch-container .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+nav .sidebar-container .switch-container .switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: gainsboro;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+nav .sidebar-container .switch-container .switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+nav .sidebar-container .switch-container input:checked + .slider {
+  background-color: #000000;
+}
+
+nav .sidebar-container .switch-container input:focus + .slider {
+  -webkit-box-shadow: 0 0 1px #000000;
+          box-shadow: 0 0 1px #000000;
+}
+
+nav .sidebar-container .switch-container input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+nav .sidebar-container .switch-container .slider.round {
+  border-radius: 34px;
+}
+
+nav .sidebar-container .switch-container .slider.round:before {
+  border-radius: 50%;
+}
+
 nav .sidebar-container .logo-side {
   width: 100%;
   display: -webkit-box;
@@ -351,6 +423,10 @@ body {
       grid-template-rows: 1fr 10fr !important;
       grid-template-areas: "nav header" "nav main";
   min-height: 100vh;
+}
+
+body.dark {
+  background-color: #01172B;
 }
 
 header {
@@ -435,7 +511,22 @@ main {
   margin-top: 1em;
 }
 
+.container table tbody tr {
+  -webkit-transition: 0;
+  transition: 0;
+  cursor: move;
+}
+
+.container table tbody tr.selected {
+  background-color: #e2e2e2;
+}
+
+.container table tbody tr.dragged {
+  opacity: 0;
+}
+
 .container table tbody td {
+  background-color: white;
   border-bottom: 2px solid rgba(183, 183, 183, 0.5);
   padding: 20px 1.5em 20px 0;
 }

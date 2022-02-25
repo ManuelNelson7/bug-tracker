@@ -16,6 +16,10 @@ $green2: #18573d;
 $red2: #571818;
 $yellow2: #72611d;
 
+$night-body: #01172B;
+$night-sidebar: #003459;
+
+
 * {
     margin: 0;
     padding: 0;
@@ -119,7 +123,7 @@ hr {
 }
 
 .project-selected {
-    color: $green;
+    color: rgb(87, 221, 245);
     font-weight: 600;
 }
 
@@ -241,6 +245,74 @@ nav {
             }
         }
 
+        .switch-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 7em;
+
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+
+                input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+
+                .slider {
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: rgb(220, 220, 220);
+                    -webkit-transition: 0.4s;
+                    transition: 0.4s;
+
+                    &:before {
+                        position: absolute;
+                        content: "";
+                        height: 26px;
+                        width: 26px;
+                        left: 4px;
+                        bottom: 4px;
+                        background-color: white;
+                        -webkit-transition: 0.4s;
+                        transition: 0.4s;
+                    }
+                }
+            }
+
+            input:checked + .slider {
+                background-color: #000000;
+            }
+
+            input:focus + .slider {
+                box-shadow: 0 0 1px #000000;
+            }
+
+            input:checked + .slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+            }
+
+            /* Rounded sliders */
+            .slider.round {
+                border-radius: 34px;
+
+                &:before {
+                    border-radius: 50%;
+                }
+            }
+        }
+
         .logo-side {
             width: 100%;
             display: flex;
@@ -265,6 +337,10 @@ body {
         "nav header"
         "nav main";
     min-height: 100vh;
+
+    &.dark {
+        background-color: $night-body;
+    }
 }
 
 header {
@@ -334,7 +410,21 @@ main {
 
         tbody {
             margin-top: 1em;
+
+            tr {
+                transition: 0;
+                cursor: move;
+
+                &.selected {
+                    background-color: rgb(226, 226, 226);
+                }
+
+                &.dragged {
+                    opacity: 0;
+                }
+            }
             td {
+                background-color: white;
                 border-bottom: 2px solid rgba(183, 183, 183, 0.5);
                 padding: 20px 1.5em 20px 0;
             }

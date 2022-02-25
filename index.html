@@ -59,7 +59,7 @@
     </div>
 
     <div id="modal-status" class="modal edit">
-        <form class="form" action="">
+        <form id="form-status" class="form" action="">
             <i class="fas fa-times cancel-btn"></i>
             <div class="form-group">
                 <label>Nuevo estado</label>
@@ -106,10 +106,17 @@
 
 
                 <ul class="project-list">
-                    <span id="all-projects" class="project-selected">Todos los proyectos</span>
+                    <span id="all-projects" class="project-selected project-item-list">Todos los proyectos</span>
                     <ul id='project-list'>
                     </ul>
                 </ul>
+            </div>
+
+            <div class="switch-container">
+                <label class="switch">
+                    <input id="switch-theme"  type="checkbox">
+                    <span class="slider round"></span>
+                </label>
             </div>
 
             <a href="./index.html" class="logo-side">
@@ -161,7 +168,7 @@
                 <thead>
                     <th id="bug-cell">Bug</th>
                     <th>Estado</th>
-                    <th id="due-header">Fecha de entrega <i id="sort-date" class="fas fa-sort-amount-down"></i></i></th>
+                    <th id="due-header">Fecha de entrega <i id="sort-date" class="fas fa-sort"></i></i></th>
                     <th>Responsable</th>
                     <th></th>
                 </thead>
@@ -174,6 +181,7 @@
         </div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.8/chance.min.js"></script>
     <script src="./js/main.js"></script>
 </body>
