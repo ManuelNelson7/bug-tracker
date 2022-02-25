@@ -258,7 +258,7 @@ nav .sidebar-container .projects .project-header {
           align-items: center;
 }
 
-nav .sidebar-container .projects .project-header #add-project {
+nav .sidebar-container .projects .project-header #plus {
   margin-right: 10px;
   font-size: 1.1em;
   cursor: pointer;

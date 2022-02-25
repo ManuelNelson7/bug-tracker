@@ -44,6 +44,7 @@ const bugs = [
 
 //LocalStorage
 const bugsToRender = JSON.parse(localStorage.getItem('bugs')) || bugs;
+const projectsToRender = JSON.parse(localStorage.getItem('projects')) || projects;
 
 console.log(bugsToRender);
 
@@ -126,7 +127,7 @@ const fetchProjects = () => {
     projectOptions.innerHTML = '';
 
     //Por cada elemento en projects, lo imprime en las listas
-    projects.forEach((project) => {
+    projectsToRender.forEach((project) => {
         projectList.innerHTML += `<li id="${project}" class="project-item-list">${project}</li>`;
         projectOptions.innerHTML += `<option value="${project}">${project}</option>`
     })
@@ -163,19 +164,29 @@ window.addEventListener('DOMContentLoaded', e => {
     fetchData();
 })
 
+document.getElementById('form-projects').addEventListener("submit", (e) => {
+    e.preventDefault()
+})
+
 // Añade un proyecto al array
 const addProject = () => {
-    let projectName = prompt('Nombre del proyecto');
+    const projectName = document.getElementById('new-project').value;
 
     if (projectName) {
-        projects.push(projectName);
+        projectsToRender.push(projectName);
+        localStorage.setItem('projects', JSON.stringify(projectsToRender));
+        document.getElementById('modal-project').classList.remove('active');
+        document.getElementById('form-projects').reset()
         fetchProjects();
     } else {
         alert('Rellena todos los campos!')
     }
 };
 
-addClick('add-project', addProject);
+document.getElementById('plus').addEventListener('click', () => {
+    openModal('modal-project')
+    addClick('add-project', addProject)
+});
 
 
 
@@ -193,9 +204,8 @@ const addBug = () => {
     //Si los campos están llenos, crea un nuevo Bug y lo añade al array
     if (bugName && bugProject && bugStatus && bugDue && bugResponsible) {
         const newBug = new Bug(bugId, bugName, bugProject, bugStatus, bugDue, bugResponsible);
-        bugs.push(newBug);
-        localStorage.setItem('bugs', JSON.stringify(bugs));
-        bugsToRender = JSON.parse(localStorage.getItem('bugs'));
+        bugsToRender.push(newBug);
+        localStorage.setItem('bugs', JSON.stringify(bugsToRender));
         document.getElementById('form-bug').reset();
         modalBug.classList.remove('active');
         fetchBugs();
