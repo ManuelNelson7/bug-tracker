@@ -122,6 +122,10 @@ hr {
   background-color: #0d3776;
 }
 
+.dark2.dark {
+  background-color: #4992FF;
+}
+
 .project-selected {
   color: #57ddf5;
   font-weight: 600;
@@ -171,6 +175,10 @@ nav {
           justify-content: center;
   background-color: #0d3776;
   width: 22em;
+}
+
+nav.dark {
+  background-color: #003459;
 }
 
 nav .sidebar-container {
@@ -453,6 +461,10 @@ header #header-container h1 {
   color: #0d3776;
 }
 
+header #header-container h1.dark {
+  color: #fff;
+}
+
 main {
   -ms-grid-row: 2;
   -ms-grid-column: 2;
@@ -472,15 +484,19 @@ main {
 
 .container table {
   width: 100%;
-  margin-top: 1em;
-  border-top: 2px solid rgba(183, 183, 183, 0.5);
+  margin-top: 2em;
   padding-top: 1em;
+  border-collapse: collapse;
 }
 
 .container table thead {
   color: #20395a;
   text-transform: uppercase;
   font-size: 0.95em;
+}
+
+.container table thead.dark {
+  color: #4992FF;
 }
 
 .container table thead #bug-cell {
@@ -511,14 +527,14 @@ main {
   margin-top: 1em;
 }
 
+.container table tbody.dark {
+  color: #f8f8f8;
+}
+
 .container table tbody tr {
   -webkit-transition: 0;
   transition: 0;
   cursor: move;
-}
-
-.container table tbody tr.selected {
-  background-color: #e2e2e2;
 }
 
 .container table tbody tr.dragged {
@@ -526,7 +542,6 @@ main {
 }
 
 .container table tbody td {
-  background-color: white;
   border-bottom: 2px solid rgba(183, 183, 183, 0.5);
   padding: 20px 1.5em 20px 0;
 }
@@ -553,6 +568,10 @@ main {
   color: #20395a;
 }
 
+.container table tbody .date.dark {
+  color: #f8f8f8;
+}
+
 .container table tbody #trash {
   font-size: 1em;
   color: #7c7c7c;
@@ -569,6 +588,10 @@ main {
 
 .container table tbody .responsable {
   color: #20395a;
+}
+
+.container table tbody .responsable.dark {
+  color: #f8f8f8;
 }
 
 .container table tbody .warning-h3 {

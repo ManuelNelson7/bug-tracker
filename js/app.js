@@ -1,59 +1,7 @@
-const projects = ['Bug Tracker', 'miTask', 'Backend'];
-const bugs = [
-    {
-        id: "2b37c8b2-c128-547b-a51b-b32be2a7958a",
-        name: "La aplicación no se conecta a una base de datos, por lo que tiene que ser hardcodeada",
-        project: "Bug Tracker",
-        status: "En proceso",
-        due: "January 30, 2022",
-        responsible: "Manuel Nelson"
-    },
-    {
-        id: "2b37c8b2-c128-547b-a51b-b33be2a7958a",
-        name: "La aplicación no es responsive",
-        project: "Bug Tracker",
-        status: "Pendiente",
-        due: "February 02, 2022",
-        responsible: "Manuel Nelson"
-    },
-    {
-        id: "2b37c8b2-c128-547b-a51b-b35be2a7958a",
-        name: "Todavía no hay modals para agregar un bug, sacar cuanto antes el form del sidebar",
-        project: "Bug Tracker",
-        status: "Pendiente",
-        due: "February 12, 2022",
-        responsible: "Manuel Nelson"
-    },
-    {
-        id: "2b37c8b2-c128-547b-a51b-b336e2a7958a",
-        name: "Crear layout y hardcodear, para probar UI",
-        project: "Bug Tracker",
-        status: "Resuelto",
-        due: "February 10, 2022",
-        responsible: "Manuel Nelson"
-    },
-    {
-        id: "2b37c8b2-c128-547b-251b-b33be2a7958a",
-        name: "Entregar proyecto final",
-        project: "miTask",
-        status: "Urgente",
-        due: "March 02, 2022",
-        responsible: "Manuel Nelson"
-    }
-];
-
+import { bugsToRender, projectsToRender, modalBug, bugTable } from './constants.js';
+import { renderBugs, addClick, toggleIcon, addDark, removeDark } from './higherOrderFunctions.js'
+import { urgents, closed, tomorrow, sevenDays, fetchTotalBugs, fetchClosedBugs, fetchUrgentBugs, fetchDueTomorrow, fetchSevenDays } from './arrays.js'
 let theme = JSON.parse(localStorage.getItem('theme'));
-
-//LocalStorage
-const bugsToRender = JSON.parse(localStorage.getItem('bugs')) || bugs;
-const projectsToRender = JSON.parse(localStorage.getItem('projects')) || projects;
-
-
-//Nodos y constantes
-const modalBug = document.getElementById('bug-modal');
-const bugTable = document.getElementById('bug-table');
-const today = new Date("February 9, 2022");
-const seconds = 86400000;
 
 //Drag and drop
 Sortable.create(bugTable, {
@@ -61,16 +9,9 @@ Sortable.create(bugTable, {
     draggable: "tr",
     chosenClass: "selected",
     dragClass: "dragged",
-
 });
 
 //funciones
-const filterBugs = (status) => {
-    return bugsToRender.filter((bug) => bug.status === status);
-}
-
-console.log('Bugs to render 1', bugsToRender);
-
 const setStatus = (id) => {
     const newStatus = document.getElementById('new-status').value;
     bugsToRender.forEach(bug => {
@@ -91,19 +32,6 @@ const deleteBug = (id) => {
     fetchResults();
 }
 
-const renderArray = (id, array) => {
-    document.getElementById(id).innerHTML = "";
-    document.getElementById(id).innerHTML = array.length;
-}
-
-const addClick = (id, func) => { //Ejecuta una función cuando el elemento es clickeado
-    document.getElementById(id).addEventListener('click', func);
-}
-
-const openModal = (modal) => {
-    document.getElementById(modal).classList.add('active');
-}
-
 const openStatus = (id) => {
     document.getElementById('modal-status').classList.add('active');
     console.log(id);
@@ -113,15 +41,14 @@ const openStatus = (id) => {
     });
 }
 
+//Searchbar
+const searchInput = document.querySelector("[data-search]");
 
-const urgents = filterBugs('Urgente');
-const closed = filterBugs('Resuelto');
-let tomorrow = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) == 1);
-let sevenDays = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) >= 7);
-
-//Pruebas de localStorage
-// const saveLocal = (key, value) => { localStorage.setItem(key, value) };
-// saveLocal("localBugs", JSON.stringify(bugs));
+searchInput.addEventListener("input", e => {
+    const searchTerm = e.target.value;
+    let searchedBugs = bugsToRender.filter((bug) => bug.name.includes(searchTerm) || bug.responsible.includes(searchTerm));
+    renderBugs(searchedBugs);
+});
 
 class Bug {
     constructor(id, name, project, status, due, responsible) {
@@ -133,7 +60,6 @@ class Bug {
         this.responsible = responsible;
     }
 };
-
 
 // Fetch de los proyectos para mostrarlos en el sidebar
 const fetchProjects = () => {
@@ -202,6 +128,7 @@ document.getElementById('plus').addEventListener('click', () => {
     addClick('add-project', addProject)
 });
 
+
 // Crea un Bug
 const addBug = () => {
     const bugId = chance.guid();
@@ -228,39 +155,6 @@ const addBug = () => {
 
 addClick('add-bug', addBug);
 
-//Conteo de Bugs
-
-//Contabiliza los bugs abiertos
-const fetchTotalBugs = () => {
-    document.getElementById('open-bugs').innerHTML = bugsToRender.length;
-    const abiertos = document.getElementById('abiertos');
-    bugsToRender.length > 1 ? abiertos.innerHTML = 'Bugs abiertos' : abiertos.innerHTML = 'Bug abierto';
-};
-
-//Contabiliza los bugs resueltos
-const fetchClosedBugs = () => {
-    renderArray('closed-bugs', closed);
-    const resueltos = document.getElementById('resueltos');
-    closed.length > 1 ? resueltos.innerHTML = 'Bugs resueltos' : resueltos.innerHTML = 'Bug resuelto';
-
-};
-
-//Contabiliza los bugs urgentes
-const fetchUrgentBugs = () => {
-    renderArray('urgent-bugs', urgents);
-    const urgentes = document.getElementById('urgentes');
-    urgents.length > 1 ? urgentes.innerHTML = 'Urgentes' : urgentes.innerHTML = 'Urgente';
-};
-
-//Contabiliza los bugs para manana
-const fetchDueTomorrow = () => {
-    renderArray('tomorrow-bugs', tomorrow);
-}
-
-//Contabiliza los bugs para dentro de 7 días
-const fetchSevenDays = () => {
-    renderArray('seven-bugs', sevenDays);
-}
 
 const fetchResults = () => {
     fetchTotalBugs();
@@ -268,24 +162,6 @@ const fetchResults = () => {
     fetchUrgentBugs();
     fetchDueTomorrow();
     fetchSevenDays();
-}
-
-//Filtrado de Bugs cuando doy click
-const renderBugs = (array) => {
-    bugTable.innerHTML = '';
-
-    array.forEach((bug) => {
-        bugTable.innerHTML += `<tr>
-            <td class="bug-name">${bug.name}</td>
-            <td class="status">
-                <div class="estado ${bug.status}">${bug.status}</div>
-            </td>
-            <td class="date">${new Date(bug.due).toLocaleDateString()}</td>
-            <td class="responsable">${bug.responsible}</td>
-            <td id="trash" onclick="deleteBug()"><i class="fas fa-trash"></i></td>
-            </tr>
-            `
-    })
 }
 
 //Filtrar bugs resueltos onclick
@@ -350,11 +226,6 @@ let statusDate = 1;
 
 //Ordenar bugs por fecha (menor a mayor)
 
-const toggleIcon = (icon, class1, class2) => {
-    icon.classList.remove(class1);
-    icon.classList.add(class2);
-};
-
 const sortDate = (orden) => {
     const sortedBugs = Object.assign([], bugsToRender);
 
@@ -384,19 +255,36 @@ const sortDateOriginal = () => {
 //Dependiendo el estado de sortBtn, filtra con los dos métodos y/o vuelve al default
 sortBtn.onclick = () => {
     sortDate(statusDate);
-    console.log(statusDate);
 };
 
 //-------------------------------------------------------------
-//Darkmode
 
+//Darkmode
 const getTheme = () => {
     if (theme == false) {
         document.body.classList.add('dark');
+        let dates = document.querySelectorAll('.date');
+        let responsibles = document.querySelectorAll('.responsable');
+        dates.forEach(date => { date.classList.add('dark') })
+        responsibles.forEach(responsible => { responsible.classList.add('dark') })
+        addDark('sidebar');
+        addDark('open-btn')
+        addDark('title');
+        addDark('thead');
+        addDark('bug-table')
 
     } if (theme == true) {
 
         document.body.classList.remove('dark');
+        let dates = document.querySelectorAll('.date');
+        let responsibles = document.querySelectorAll('.responsable');
+        dates.forEach(date => { date.classList.remove('dark') })
+        responsibles.forEach(responsible => { responsible.classList.remove('dark') })
+        removeDark('sidebar');
+        removeDark('open-btn');
+        removeDark('title');
+        removeDark('thead');
+        removeDark('bug-table')
     }
 };
 
@@ -413,4 +301,3 @@ window.addEventListener('DOMContentLoaded', e => {
     getTheme();
     console.log(theme);
 })
-
