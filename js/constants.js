@@ -1,5 +1,3 @@
-
-
 export const projects = ['Bug Tracker', 'miTask', 'Backend'];
 export const bugs = [
     {
@@ -52,6 +50,7 @@ export const projectsToRender = JSON.parse(localStorage.getItem('projects')) || 
 //Nodes and constants
 export const modalBug = document.getElementById('bug-modal');
 export const bugTable = document.getElementById('bug-table');
+export const searchInput = document.querySelector("[data-search]");
 export const today = new Date("March 01, 2022");
 export const seconds = 86400000;
 

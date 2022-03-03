@@ -1,0 +1,37 @@
+header {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 22em;
+    align-items: center;
+    top: 1.5em;
+    background-color: rgb(255, 255, 255);
+    z-index: 9000;
+    padding-bottom: 2em;
+
+    &.min-sidebar {
+        left: 5em;
+    }
+
+    &.dark {
+        background-color: $night-body;
+    }
+
+    #header-container {
+        width: 76.5vw;
+        display: flex;
+        justify-content: space-between;
+
+        h1 {
+            color: $dark;
+
+            &.dark {
+                color: #fff;
+            }
+        }
+
+        &.min-sidebar {
+            width: 90vw;
+        }
+    }
+}

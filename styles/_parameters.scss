@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
+$dark: #0d3776;
+$dark2: #205599;
+$dark-gray: #20395a;
+$blue: #7296c5;
+$green: #bfedd9;
+$red: #edbfbf;
+$yellow: #ede6bf;
+$light-blue: #98c1d9;
+$gray87: #e5e5e5de;
+$gray-line: #b7b7b780;
+$strong-gray: rgb(124, 124, 124);
+
+$green2: #18573d;
+$red2: #571818;
+$yellow2: #72611d;
+
+$night-body: #01172b;
+$night-sidebar: #003459;
+$night-blue: #4992ff;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.text-70 {
+    color: #f2f2f2e5;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+hr {
+    border: 1px solid rgba(183, 183, 183, 0.5);
+    position: fixed;
+    top: 14em;
+    width: 100%;
+    z-index: 9000;
+}

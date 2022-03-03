@@ -91,7 +91,18 @@
     </div>
 
     <nav id="sidebar">
+
+        <i id="logo-mobile" class="fas fa-bug"></i>
+
+        <div id="resize">
+            <i id="icon-resize" class="fas fa-chevron-left"></i>
+        </div>
+
         <div class="sidebar-container">
+
+            <a href="https://github.com/ManuelNelson7/bug-tracker" target="_blank" class="logo-side">
+                <img src="./img/Logo.svg" alt="Bug tracker">
+            </a>
 
             <div class="search">
                 <input id="search-input" type="text" placeholder="Buscar bug por nombre" data-search>
@@ -112,30 +123,25 @@
                 </ul>
             </div>
 
+            <i id="search-mobile" class="fas fa-search"></i>
+
             <div class="switch-container">
                 <label class="switch">
-                    <input id="switch-theme"  type="checkbox">
+                    <input id="switch-theme" type="checkbox">
                     <span class="slider round"></span>
                 </label>
             </div>
 
-            <a href="https://github.com/ManuelNelson7/bug-tracker" target="_blank" class="logo-side">
-                <img src="./img/Logo.svg" alt="Bug tracker">
-            </a>
         </div>
     </nav>
 
 
     <header>
-        <div class="container" id="header-container">
-            <h1 id="title">Mis Bugs</h1>
-            <div id="open-btn" class="btn dark2">Agregar Bug</div>
-        </div>
-    </header>
-
-    <main>
-        <hr>
         <div class="container">
+            <div id="header-container">
+                <h1 id="title">Mis Bugs</h1>
+                <div id="open-btn" class="btn dark2">Agregar Bug</div>
+            </div>
             <div class="results">
 
                 <div id="results-total" class="result blue">
@@ -164,6 +170,12 @@
                 </div>
 
             </div>
+        </div>
+    </header>
+
+    <main>
+        <hr>
+        <div class="container">
             <table>
                 <thead id="thead" border="0" cellspacing="0" cellpadding="0">
                     <th id="bug-cell">Bug</th>
@@ -184,6 +196,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.8/chance.min.js"></script>
     <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/darkTheme.js"></script>
+    <script type="module" src="./js/sidebarResize.js"></script>
 </body>
 
 </html>

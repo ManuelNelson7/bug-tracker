@@ -1,101 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+@import "./parameters";
 
-$dark: #0d3776;
-$dark2: #205599;
-$dark-gray: #20395a;
-$blue: #7296c5;
-$green: #bfedd9;
-$red: #edbfbf;
-$yellow: #ede6bf;
-$light-blue: #98c1d9;
-$gray87: #e5e5e5de;
-$gray-line: #b7b7b780;
-$strong-gray: rgb(124, 124, 124);
+/*----Sidebar-----*/
 
-$green2: #18573d;
-$red2: #571818;
-$yellow2: #72611d;
+@import "./sidebar";
 
-$night-body: #01172B;
-$night-sidebar: #003459;
-$night-blue: #4992FF;
+/*----Header----*/
+@import "./header";
 
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.text-70 {
-    color: #f2f2f2e5;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-hr {
-    border: 1px solid rgba(183, 183, 183, 0.5);
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-.result {
-    display: flex;
-    flex-direction: column;
-    border-radius: 12px;
-    gap: 5px;
-    height: 7em;
-    width: 7em;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.14);
-    cursor: pointer;
-    transition: ease-in-out 0.3s;
-
-    &:hover {
-        transform: scale(1.04);
-    }
-
-    span {
-        font-weight: 600;
-        font-size: 1.3em;
-    }
-
-    p {
-        font-size: 0.85em;
-        font-weight: 500;
-    }
-}
-
-.blue,
-.En {
-    background-color: $blue;
-    color: $dark;
-}
-
-.green,
-.Resuelto {
-    background-color: $green;
-    color: $green2;
-}
-
-.red,
-.Urgente {
-    background-color: $red;
-    color: $red2;
-}
-
-.yellow,
-.Pendiente {
-    background-color: $yellow;
-    color: $yellow2;
-}
-
-.light-blue {
-    background-color: $light-blue;
-    color: $dark;
-}
+/*----Results----*/
+@import "./results";
 
 .estado {
     display: flex;
@@ -149,202 +62,9 @@ hr {
     justify-content: center;
 }
 
-nav {
-    grid-area: nav;
-    display: flex;
-    justify-content: center;
-    background-color: $dark;
-    width: 22em;
-
-    &.dark {
-        background-color: $night-sidebar;
-    }
-
-    .sidebar-container {
-        display: flex;
-        flex-direction: column;
-        width: 85%;
-        height: 100%;
-        padding: 1em 0;
-        position: relative;
-
-        .search {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            background-color: $gray87;
-            justify-content: space-between;
-            border-radius: 12px;
-            padding: 0 10px;
-
-            input {
-                width: 100%;
-                padding: 16px 0;
-                border-radius: 12px;
-                border: 0;
-                outline: none;
-                background-color: transparent;
-                font-size: 0.9em;
-
-                &::placeholder {
-                    color: $dark;
-                }
-            }
-
-            i {
-                color: $dark;
-            }
-        }
-
-        .projects {
-            display: flex;
-            flex-direction: column;
-            color: #fff;
-            margin-top: 2em;
-
-            .project-header {
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-
-                #plus {
-                    margin-right: 10px;
-                    font-size: 1.1em;
-                    cursor: pointer;
-                }
-            }
-
-            .project-list {
-                margin-top: 1em;
-                display: flex;
-                flex-direction: column;
-                list-style: none;
-                gap: 1.2em;
-                cursor: pointer;
-
-                ul {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1.2em;
-                    list-style: none;
-                }
-
-                li {
-                    transition: ease-in-out 0.2s;
-                }
-            }
-        }
-
-        #form-bug {
-            display: flex;
-            flex-direction: column;
-            margin-top: 2em;
-            gap: 1em;
-
-            .form-group {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5em;
-
-                label {
-                    color: #fff;
-                    font-weight: 500;
-                }
-            }
-        }
-
-        .switch-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            position: absolute;
-            bottom: 7em;
-
-            .switch {
-                position: relative;
-                display: inline-block;
-                width: 60px;
-                height: 34px;
-
-                input {
-                    opacity: 0;
-                    width: 0;
-                    height: 0;
-                }
-
-                .slider {
-                    position: absolute;
-                    cursor: pointer;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    background-color: rgb(220, 220, 220);
-                    -webkit-transition: 0.4s;
-                    transition: 0.4s;
-
-                    &:before {
-                        position: absolute;
-                        content: "";
-                        height: 26px;
-                        width: 26px;
-                        left: 4px;
-                        bottom: 4px;
-                        background-color: white;
-                        -webkit-transition: 0.4s;
-                        transition: 0.4s;
-                    }
-                }
-            }
-
-            input:checked + .slider {
-                background-color: #000000;
-            }
-
-            input:focus + .slider {
-                box-shadow: 0 0 1px #000000;
-            }
-
-            input:checked + .slider:before {
-                -webkit-transform: translateX(26px);
-                -ms-transform: translateX(26px);
-                transform: translateX(26px);
-            }
-
-            /* Rounded sliders */
-            .slider.round {
-                border-radius: 34px;
-
-                &:before {
-                    border-radius: 50%;
-                }
-            }
-        }
-
-        .logo-side {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            position: absolute;
-            bottom: 3em;
-
-            img {
-                height: 1.8em;
-            }
-        }
-    }
-}
-
 body {
     font-family: "Roboto", sans-serif;
     position: relative;
-    display: grid;
-    grid-template-columns: max-content auto;
-    grid-template-rows: 1fr 10fr !important;
-    grid-template-areas:
-        "nav header"
-        "nav main";
     min-height: 100vh;
 
     &.dark {
@@ -352,46 +72,23 @@ body {
     }
 }
 
-header {
-    grid-area: header;
-    @extend .justify-center;
-    height: 100% !important;
-
-    #header-container {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-
-        h1 {
-            color: $dark;
-
-            &.dark {
-                color: #fff;
-            }
-        }
-    }
-}
-
 main {
-    grid-area: main;
     height: 100%;
     @extend .justify-center;
     position: relative;
+    margin-left: 22em;
+
+    &.min-sidebar {
+        margin-left: 5em;
+    }
 }
 
 .container {
-    .results {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 7em);
-        gap: 1em;
-        margin-top: 1em;
-    }
-
     table {
         width: 100%;
-        margin-top: 2em;
+        margin-top: 15em;
         padding-top: 1em;
-        border-collapse:collapse;
+        border-collapse: collapse;
 
         thead {
             color: $dark-gray;
@@ -435,7 +132,6 @@ main {
             tr {
                 transition: 0;
                 cursor: move;
-
 
                 &.dragged {
                     opacity: 0;
@@ -488,7 +184,7 @@ main {
                 color: $dark-gray;
 
                 &.dark {
-                    color: rgb(248, 248,248);
+                    color: rgb(248, 248, 248);
                 }
             }
 

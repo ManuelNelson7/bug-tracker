@@ -1,7 +1,6 @@
-import { bugsToRender, projectsToRender, modalBug, bugTable } from './constants.js';
-import { renderBugs, addClick, toggleIcon, addDark, removeDark } from './higherOrderFunctions.js'
+import { bugsToRender, projectsToRender, modalBug, bugTable, searchInput } from './constants.js';
+import { renderBugs, addClick, toggleIcon, openModal, addDark, removeDark } from './higherOrderFunctions.js'
 import { urgents, closed, tomorrow, sevenDays, fetchTotalBugs, fetchClosedBugs, fetchUrgentBugs, fetchDueTomorrow, fetchSevenDays } from './arrays.js'
-let theme = JSON.parse(localStorage.getItem('theme'));
 
 //Drag and drop
 Sortable.create(bugTable, {
@@ -21,7 +20,7 @@ const setStatus = (id) => {
     localStorage.setItem('bugs', JSON.stringify(bugsToRender));
     fetchBugs();
     fetchResults();
-}
+};
 
 const deleteBug = (id) => {
     for (let i = 0; i < bugsToRender.length; i++) {
@@ -30,7 +29,14 @@ const deleteBug = (id) => {
     localStorage.setItem('bugs', JSON.stringify(bugsToRender));
     fetchBugs();
     fetchResults();
-}
+};
+
+searchInput.addEventListener("input", e => {
+    const searchTerm = e.target.value;
+    let searchedBugs = bugsToRender.filter((bug) => bug.name.includes(searchTerm) || bug.responsible.includes(searchTerm));
+    renderBugs(searchedBugs);
+});
+
 
 const openStatus = (id) => {
     document.getElementById('modal-status').classList.add('active');
@@ -39,16 +45,8 @@ const openStatus = (id) => {
         e.preventDefault()
         setStatus(id)
     });
-}
+};
 
-//Searchbar
-const searchInput = document.querySelector("[data-search]");
-
-searchInput.addEventListener("input", e => {
-    const searchTerm = e.target.value;
-    let searchedBugs = bugsToRender.filter((bug) => bug.name.includes(searchTerm) || bug.responsible.includes(searchTerm));
-    renderBugs(searchedBugs);
-});
 
 class Bug {
     constructor(id, name, project, status, due, responsible) {
@@ -162,7 +160,7 @@ const fetchResults = () => {
     fetchUrgentBugs();
     fetchDueTomorrow();
     fetchSevenDays();
-}
+};
 
 //Filtrar bugs resueltos onclick
 addClick('results-total', fetchBugs);
@@ -201,16 +199,18 @@ const getProject = (event) => {
     `
     }
 
-}
+};
+
 addClick('project-list', getProject);
+
 document.getElementById('all-projects').addEventListener('click', () => {
     document.getElementById('all-projects').classList.toggle('project-selected')
-})
+});
 
 //Abrir modal bug
 const openModalBug = () => {
     modalBug.classList.add('active');
-}
+};
 addClick('open-btn', openModalBug);
 
 //Cerrar modal bug
@@ -218,7 +218,7 @@ const closeBtns = document.querySelectorAll('.cancel-btn');
 const modals = document.querySelectorAll('.modal');
 closeBtns.forEach(btn => {
     btn.onclick = () => { modals.forEach(modal => { modal.classList.remove('active') }) };
-})
+});
 
 //Sort por fecha---------------------------------------------------
 let sortBtn = document.getElementById('sort-date');
@@ -244,13 +244,13 @@ const sortDate = (orden) => {
         statusDate = 1;
         toggleIcon(sortBtn, 'fa-sort-amount-up', 'fa-sort');
     }
-}
+};
 
 //Ordenar bugs por defecto (Éste no funciona, no recarga con el array original)
 const sortDateOriginal = () => {
     fetchBugs();
     statusDate = 3;
-}
+};
 
 //Dependiendo el estado de sortBtn, filtra con los dos métodos y/o vuelve al default
 sortBtn.onclick = () => {
@@ -259,45 +259,6 @@ sortBtn.onclick = () => {
 
 //-------------------------------------------------------------
 
-//Darkmode
-const getTheme = () => {
-    if (theme == false) {
-        document.body.classList.add('dark');
-        let dates = document.querySelectorAll('.date');
-        let responsibles = document.querySelectorAll('.responsable');
-        dates.forEach(date => { date.classList.add('dark') })
-        responsibles.forEach(responsible => { responsible.classList.add('dark') })
-        addDark('sidebar');
-        addDark('open-btn')
-        addDark('title');
-        addDark('thead');
-        addDark('bug-table')
-
-    } if (theme == true) {
-
-        document.body.classList.remove('dark');
-        let dates = document.querySelectorAll('.date');
-        let responsibles = document.querySelectorAll('.responsable');
-        dates.forEach(date => { date.classList.remove('dark') })
-        responsibles.forEach(responsible => { responsible.classList.remove('dark') })
-        removeDark('sidebar');
-        removeDark('open-btn');
-        removeDark('title');
-        removeDark('thead');
-        removeDark('bug-table')
-    }
-};
-
-const checkbox = document.getElementById('switch-theme').value;
-
-addClick('switch-theme', () => {
-    theme = !theme;
-    localStorage.setItem('theme', theme);
-    getTheme();
-})
-
 window.addEventListener('DOMContentLoaded', e => {
     fetchData();
-    getTheme();
-    console.log(theme);
-})
+});

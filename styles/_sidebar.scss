@@ -1,0 +1,257 @@
+nav {
+    grid-area: nav;
+    display: flex;
+    justify-content: center;
+    background-color: $dark;
+    width: 22em;
+    position: fixed;
+    height: 100vh;
+    z-index: 9002;
+
+    &.min-sidebar {
+        width: 5em;
+    }
+
+    #resize {
+        background-color: $dark;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: -1em;
+        top: 1.8em;
+        cursor: pointer;
+
+        &.dark {
+            background-color: $night-sidebar;
+        }
+
+        i {
+            font-size: 1.5em;
+            color: #fff;
+            padding: 6px 11px;
+            margin-left: -2px;
+        }
+    }
+
+    &.dark {
+        background-color: $night-sidebar;
+    }
+
+    #logo-mobile {
+        display: none;
+
+        &.min-sidebar {
+            display: flex;
+            position: absolute;
+            top: 1.5em;
+            color: #fff;
+            font-size: 1.4em;
+        }
+    }
+
+    .sidebar-container {
+        display: flex;
+        flex-direction: column;
+        width: 85%;
+        height: 100%;
+        padding: 1em 0;
+        position: relative;
+
+        #search-mobile {
+            display: none;
+        }
+
+        &.min-sidebar {
+            a {
+                display: none;
+            }
+            .search {
+                display: none;
+            }
+            .projects {
+                display: none;
+            }
+
+            .switch-container {
+                .switch{
+                    transform: scale(0.8);
+                }
+            }
+
+            #search-mobile {
+                display: flex;
+                position: absolute;
+                bottom: 8.2em;
+                cursor: pointer;
+                left: 1em;
+                color: #fff;
+                font-size: 1.4em;
+            }
+        }
+
+        .logo-side {
+            width: 100%;
+            display: flex;
+            margin-top: 0.8em;
+            justify-content: center;
+
+            img {
+                height: 2em;
+            }
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background-color: $gray87;
+            justify-content: space-between;
+            border-radius: 12px;
+            padding: 0 10px;
+            position: absolute;
+            bottom: 10em;
+
+            input {
+                width: 100%;
+                padding: 16px 0;
+                border-radius: 12px;
+                border: 0;
+                outline: none;
+                background-color: transparent;
+                font-size: 0.9em;
+
+                &::placeholder {
+                    color: $dark;
+                }
+            }
+
+            i {
+                color: $dark;
+            }
+        }
+
+        .projects {
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            margin-top: 3em;
+
+            .project-header {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                #plus {
+                    margin-right: 10px;
+                    font-size: 1.1em;
+                    cursor: pointer;
+                }
+            }
+
+            .project-list {
+                margin-top: 1em;
+                display: flex;
+                flex-direction: column;
+                list-style: none;
+                gap: 1.2em;
+                cursor: pointer;
+
+                ul {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.2em;
+                    list-style: none;
+                }
+
+                li {
+                    transition: ease-in-out 0.2s;
+                }
+            }
+        }
+
+        .switch-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 4em;
+
+            &.min-sidebar {
+                display: flex;
+            }
+
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 60px;
+                height: 34px;
+
+                input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+
+                .slider {
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: rgb(220, 220, 220);
+                    -webkit-transition: 0.4s;
+                    transition: 0.4s;
+
+                    &:before {
+                        position: absolute;
+                        content: "";
+                        height: 26px;
+                        width: 26px;
+                        left: 4px;
+                        bottom: 4px;
+                        background-color: white;
+                        -webkit-transition: 0.4s;
+                        transition: 0.4s;
+                    }
+                }
+            }
+
+            input:checked + .slider {
+                background-color: #000000;
+            }
+
+            input:focus + .slider {
+                box-shadow: 0 0 1px #000000;
+            }
+
+            input:checked + .slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+            }
+
+            /* Rounded sliders */
+            .slider.round {
+                border-radius: 34px;
+
+                &:before {
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 960px) {
+    // nav {
+    //     width: 4em!important;
+
+    //     .sidebar-container {
+
+    //     }
+    // }
+}
