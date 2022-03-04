@@ -1,4 +1,4 @@
-import {addClick, addDark, removeDark} from './higherOrderFunctions.js';
+import { addClick } from './higherOrderFunctions.js';
 
 let theme = JSON.parse(localStorage.getItem('theme'));
 
@@ -7,8 +7,18 @@ window.addEventListener('DOMContentLoaded', e => {
     console.log(theme);
 });
 
+//Adds the class 'dark' to a node (by id)
+export const addDark = (id) => {
+    document.getElementById(id).classList.add('dark');
+};
 
-const getTheme = () => {
+//Removes the class 'dark' to a node (by id)
+export const removeDark = (id) => {
+    document.getElementById(id).classList.remove('dark')
+};
+
+
+export const getTheme = () => {
     if (theme == false) {
         document.body.classList.add('dark');
         let dates = document.querySelectorAll('.date');
@@ -41,7 +51,7 @@ const getTheme = () => {
 
 const checkbox = document.getElementById('switch-theme').value;
 
-addClick('switch-theme', () => {
+document.getElementById('switch-theme').addEventListener('click', () => {
     theme = !theme;
     localStorage.setItem('theme', theme);
     getTheme();

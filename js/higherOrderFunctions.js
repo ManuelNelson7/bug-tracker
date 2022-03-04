@@ -1,6 +1,5 @@
 import { bugsToRender, bugTable } from "./constants.js";
-import { assignBtns } from "./app.js";
-
+import { assignBtns } from "./functions.js";
 //Filters the bugs according to status
 export const filterBugs = (status) => {
     return bugsToRender.filter((bug) => bug.status === status);
@@ -28,20 +27,12 @@ export const toggleIcon = (icon, class1, class2) => {
     icon.classList.add(class2);
 };
 
-//Adds the class 'dark' to a node (by id)
-export const addDark = (id) => {
-    document.getElementById(id).classList.add('dark');
-};
-
-//Removes the class 'dark' to a node (by id)
-export const removeDark = (id) => {
-    document.getElementById(id).classList.remove('dark')
-};
-
 //Toggles between the class "min-sidebar" in a node (by query selector)
 export const toggleSize = (query) => {
     document.querySelector(query).classList.toggle('min-sidebar');
 }
+
+import { getTheme } from "./darkTheme.js";
 
 //Renders the bugs of an array inside of the table
 export const renderBugs = (array) => {
@@ -60,4 +51,5 @@ export const renderBugs = (array) => {
         `
     })
     assignBtns();
+    getTheme();
 };

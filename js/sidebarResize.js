@@ -1,7 +1,9 @@
 import { toggleSize, addClick } from "./higherOrderFunctions.js";
+import {searchInput} from "./constants.js";
 
 let statusBar = true;
 
+//Toggles between the 2 sizes of the sidebar
 const resizeSidebar = () => {
     toggleSize('#sidebar');
     toggleSize('.sidebar-container');
@@ -11,6 +13,7 @@ const resizeSidebar = () => {
     toggleSize('header');
     toggleSize('#header-container');
 
+    //Makes the arrow icon turn to left or right
     if (statusBar) {
         document.getElementById('icon-resize').classList.remove('fa-chevron-left');
         document.getElementById('icon-resize').classList.add('fa-chevron-right');
@@ -21,11 +24,13 @@ const resizeSidebar = () => {
         statusBar = !statusBar
 
     }
-}
+};
 
 addClick('resize', resizeSidebar);
-addClick('search-mobile', resizeSidebar);
 
-const width = window.innerWidth;
-console.log(width);
-width < 880 ? resizeSidebar() : '';
+// Resizes the sidebar to the original size and focus on the searchbar
+// when the user clicks on the search icon
+addClick('search-mobile', () => {
+    resizeSidebar();
+    searchInput.focus()
+});
