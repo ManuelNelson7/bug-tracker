@@ -650,7 +650,7 @@ main.min-sidebar {
   color: #f8f8f8;
 }
 
-.container table tbody #trash {
+.container table tbody .trash {
   font-size: 1em;
   color: #7c7c7c;
   cursor: pointer;
@@ -658,7 +658,7 @@ main.min-sidebar {
   transition: 0.25s;
 }
 
-.container table tbody #trash:hover {
+.container table tbody .trash:hover {
   color: #bd0000;
   -webkit-transition: 0.25s;
   transition: 0.25s;
@@ -693,6 +693,7 @@ main.min-sidebar {
   display: none;
   -webkit-transition: opacity 0.3s ease !important;
   transition: opacity 0.3s ease !important;
+  z-index: 9005 !important;
 }
 
 .modal .fa-times {

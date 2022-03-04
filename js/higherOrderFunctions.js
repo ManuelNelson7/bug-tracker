@@ -1,4 +1,5 @@
 import { bugsToRender, bugTable } from "./constants.js";
+import { assignBtns } from "./app.js";
 
 //Filters the bugs according to status
 export const filterBugs = (status) => {
@@ -48,14 +49,15 @@ export const renderBugs = (array) => {
 
     array.forEach((bug) => {
         bugTable.innerHTML += `<tr>
-            <td class="bug-name">${bug.name}</td>
-            <td class="status">
-                <div onclick="openStatus('${bug.id}')" class="estado ${bug.status}">${bug.status}</div>
-            </td>
-            <td class="date">${new Date(bug.due).toLocaleDateString()}</td>
-            <td class="responsable">${bug.responsible}</td>
-            <td id="trash" onclick="deleteBug('${bug.id}')"><i class="fas fa-trash"></i></td>
-            </tr>
-            `
+        <td class="bug-name">${bug.name}</td>
+        <td class="status">
+            <div id="${bug.id}" class="estado ${bug.status}">${bug.status}</div>
+        </td>
+        <td class="date">${new Date(bug.due).toLocaleDateString()}</td>
+        <td class="responsable">${bug.responsible}</td>
+        <td class='trash' id="${bug.id}"><i class="fas fa-trash"></i></td>
+        </tr>
+        `
     })
+    assignBtns();
 };

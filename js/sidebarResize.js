@@ -10,7 +10,7 @@ const resizeSidebar = () => {
     toggleSize('main');
     toggleSize('header');
     toggleSize('#header-container');
-    
+
     if (statusBar) {
         document.getElementById('icon-resize').classList.remove('fa-chevron-left');
         document.getElementById('icon-resize').classList.add('fa-chevron-right');
@@ -26,5 +26,6 @@ const resizeSidebar = () => {
 addClick('resize', resizeSidebar);
 addClick('search-mobile', resizeSidebar);
 
-if document.innerWidth < 780
-document.innerWidth < 780 && resizeSidebar();
+const width = window.innerWidth;
+console.log(width);
+width < 880 ? resizeSidebar() : '';

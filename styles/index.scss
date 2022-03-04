@@ -168,7 +168,7 @@ main {
                 }
             }
 
-            #trash {
+            .trash {
                 font-size: 1em;
                 color: rgb(124, 124, 124);
                 cursor: pointer;
@@ -210,6 +210,7 @@ main {
 .modal {
     display: none;
     transition: opacity 0.3s ease !important;
+    z-index: 9005!important;
 
     .fa-times {
         position: absolute;
