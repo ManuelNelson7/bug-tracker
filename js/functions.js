@@ -47,23 +47,26 @@ export const fetchBugs = () => {
 //Opens the modal to change the status
 export const openStatus = (id) => {
     document.getElementById('modal-status').classList.add('active');
-    console.log(id);
     document.getElementById('edit-status').addEventListener("click", (e) => {
         e.preventDefault()
         setStatus(id)
     });
 };
 
+//Sets the new status to a bug
 export const setStatus = (id) => {
     const newStatus = document.getElementById('new-status').value;
     bugsToRender.forEach(bug => {
         bug.id === id && (bug.status = newStatus);
+
     })
     document.getElementById('modal-status').classList.remove('active');
     localStorage.setItem('bugs', JSON.stringify(bugsToRender));
+    newStatus = ""
     fetchBugs();
     fetchResults();
 };
+
 
 export const deleteBug = (id) => {
     for (let i = 0; i < bugsToRender.length; i++) {

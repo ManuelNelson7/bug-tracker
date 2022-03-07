@@ -1,5 +1,3 @@
-import { addClick } from './higherOrderFunctions.js';
-
 let theme = JSON.parse(localStorage.getItem('theme'));
 
 window.addEventListener('DOMContentLoaded', e => {

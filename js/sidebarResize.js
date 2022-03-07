@@ -1,5 +1,5 @@
 import { toggleSize, addClick } from "./higherOrderFunctions.js";
-import {searchInput} from "./constants.js";
+import { searchInput } from "./constants.js";
 
 let statusBar = true;
 

@@ -143,6 +143,8 @@ nav .sidebar-container .logo-side {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  -webkit-filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+          filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 nav .sidebar-container .logo-side img {
@@ -355,6 +357,7 @@ header {
   background-color: white;
   z-index: 9000;
   padding-bottom: 2em;
+  width: calc(100vw - 22em);
 }
 
 header.min-sidebar {
@@ -366,7 +369,6 @@ header.dark {
 }
 
 header #header-container {
-  width: 76.5vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
