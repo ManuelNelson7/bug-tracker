@@ -1,9 +1,6 @@
 import { bugsToRender, bugTable } from "./constants.js";
 import { assignBtns } from "./functions.js";
 //Filters the bugs according to status
-export const filterBugs = (status) => {
-    return bugsToRender.filter((bug) => bug.status === status);
-};
 
 //Renders the length of the array inside of an element by id
 export const renderArray = (id, array) => {

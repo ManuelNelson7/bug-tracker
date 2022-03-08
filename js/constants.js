@@ -51,8 +51,10 @@ export const projectsToRender = JSON.parse(localStorage.getItem('projects')) || 
 export const modalBug = document.getElementById('bug-modal');
 export const bugTable = document.getElementById('bug-table');
 export const searchInput = document.querySelector("[data-search]");
-export const today = new Date("March 01, 2022");
 export const seconds = 86400000;
 
-
+//Getting the actual date, stored in "today"
+const dateNow = new Date();
+export const newDate = dateNow.getFullYear()+'-'+(dateNow.getMonth()+1)+'-'+dateNow.getDate();
+export const today = new Date(newDate);
 

@@ -1,6 +1,5 @@
 import { bugsToRender, bugTable } from "./constants.js";
-import { fetchResults } from "./app.js";
-import { getTheme } from "./darkTheme.js";
+import { fetchResults } from "./arrays.js";
 
 //Assigns the event click to all the status's buttons in the array
 const assignButtonsStatus = () => {
@@ -23,27 +22,6 @@ export const assignBtns = () => {
     assignButtonsStatus();
 };
 
-// Fetch the bugs to renders them in the table
-export const fetchBugs = () => {
-    bugTable.innerHTML = '';
-
-    bugsToRender.forEach((bug) => {
-        bugTable.innerHTML += `<tr>
-        <td class="bug-name">${bug.name}</td>
-        <td class="status">
-            <div id="${bug.id}" class="estado ${bug.status}">${bug.status}</div>
-        </td>
-        <td class="date">${new Date(bug.due).toLocaleDateString()}</td>
-        <td class="responsable">${bug.responsible}</td>
-        <td class='trash' id="${bug.id}"><i class="fas fa-trash"></i></td>
-        </tr>
-        `
-    })
-    assignBtns();
-    fetchResults();
-    getTheme();
-};
-
 //Opens the modal to change the status
 export const openStatus = (id) => {
     document.getElementById('modal-status').classList.add('active');
@@ -62,7 +40,7 @@ export const setStatus = (id) => {
     })
     document.getElementById('modal-status').classList.remove('active');
     localStorage.setItem('bugs', JSON.stringify(bugsToRender));
-    newStatus = ""
+    document.getElementById('form-status').reset()
     fetchBugs();
     fetchResults();
 };

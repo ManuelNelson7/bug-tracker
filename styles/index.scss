@@ -1,7 +1,6 @@
 @import "./parameters";
 
 /*----Sidebar-----*/
-
 @import "./sidebar";
 
 /*----Header----*/
@@ -210,7 +209,7 @@ main {
 .modal {
     display: none;
     transition: opacity 0.3s ease !important;
-    z-index: 9005!important;
+    z-index: 9005 !important;
 
     .fa-times {
         position: absolute;

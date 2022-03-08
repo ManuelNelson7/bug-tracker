@@ -1,8 +1,8 @@
 import { bugsToRender, projectsToRender, modalBug, bugTable, searchInput } from './constants.js';
 import { renderBugs, addClick, toggleIcon, openModal } from './higherOrderFunctions.js'
-import { urgents, closed, tomorrow, sevenDays, fetchTotalBugs, fetchClosedBugs, fetchUrgentBugs, fetchDueTomorrow, fetchSevenDays } from './arrays.js'
-import { fetchBugs } from './functions.js';
-import { getTheme } from './darkTheme.js';
+import { urgents, closed, tomorrow, sevenDays} from './arrays.js'
+import { fetchBugs } from './bugs.js';
+import { addBug } from './bugs.js';
 
 //Drag and drop
 Sortable.create(bugTable, {
@@ -12,24 +12,12 @@ Sortable.create(bugTable, {
     dragClass: "dragged",
 });
 
-//funciones
+//Searchbar by bugName or bugResponsible
 searchInput.addEventListener("input", e => {
     const searchTerm = e.target.value.toLowerCase();
     let searchedBugs = bugsToRender.filter((bug) => bug.name.toLowerCase().includes(searchTerm) || bug.responsible.includes(searchTerm));
     renderBugs(searchedBugs);
 });
-
-
-class Bug {
-    constructor(id, name, project, status, due, responsible) {
-        this.id = id;
-        this.name = name;
-        this.project = project;
-        this.status = status;
-        this.due = due;
-        this.responsible = responsible;
-    }
-};
 
 // Fetch de los proyectos para mostrarlos en el sidebar
 const fetchProjects = () => {
@@ -81,39 +69,9 @@ document.getElementById('plus').addEventListener('click', () => {
 
 
 // Crea un Bug
-const addBug = () => {
-    const bugId = chance.guid();
-    const bugName = document.getElementById('bug-name').value;
-    const bugProject = document.getElementById('projects-options').value;
-    const bugStatus = document.getElementById('status').value;
-    const bugDue = new Date(document.getElementById('due').value);
-    const bugResponsible = document.getElementById('responsible').value;
-    const alertBug = document.getElementById('alertBug');
 
-    //Si los campos están llenos, crea un nuevo Bug y lo añade al array
-    if (bugName && bugProject && bugStatus && bugDue && bugResponsible) {
-        const newBug = new Bug(bugId, bugName, bugProject, bugStatus, bugDue, bugResponsible);
-        bugsToRender.push(newBug);
-        localStorage.setItem('bugs', JSON.stringify(bugsToRender));
-        document.getElementById('form-bug').reset();
-        modalBug.classList.remove('active');
-        fetchBugs();
-        fetchResults();
-    } else {
-        alertBug.innerHTML = 'Por favor, rellena todos los campos'
-    };
-};
 
 addClick('add-bug', addBug);
-
-
-export const fetchResults = () => {
-    fetchTotalBugs();
-    fetchClosedBugs();
-    fetchUrgentBugs();
-    fetchDueTomorrow();
-    fetchSevenDays();
-};
 
 //Filtrar bugs resueltos onclick
 addClick('results-total', fetchBugs);
