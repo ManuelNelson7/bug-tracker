@@ -42,8 +42,17 @@ export const bugs = [
     }
 ];
 
+const fetchOrLocal= async () => {
+    const res = await fetch('/bugsDefault.json')
+    const data = await res.json()
+
+    return data;
+}
+
+fetchOrLocal()
+
 //LocalStorage
-export const bugsToRender = JSON.parse(localStorage.getItem('bugs')) || bugs;
+export const bugsToRender = JSON.parse(localStorage.getItem('bugs')) || await fetchOrLocal();
 export const projectsToRender = JSON.parse(localStorage.getItem('projects')) || projects;
 
 

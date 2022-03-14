@@ -1,8 +1,9 @@
 import { bugsToRender, projectsToRender, modalBug, bugTable, searchInput } from './constants.js';
 import { renderBugs, addClick, toggleIcon, openModal } from './higherOrderFunctions.js'
-import { urgents, closed, tomorrow, sevenDays} from './arrays.js'
+import { urgents, closed, tomorrow, sevenDays } from './arrays.js'
 import { fetchBugs } from './bugs.js';
 import { addBug } from './bugs.js';
+import { getTheme } from './darkTheme.js';
 
 //Drag and drop
 Sortable.create(bugTable, {
@@ -97,12 +98,13 @@ const getProject = (event) => {
     const projectClicked = event.target.id;
     event.target.classList.add('project-selected');
     const projectFiltered = bugsToRender.filter((bug) => bug.project === `${projectClicked}`);
-    const filterByProject = () => renderBugs(projectFiltered);
+
 
     if (projectFiltered != "") {
-        filterByProject();
+        renderBugs(projectFiltered);
     } else {
-        filterByProject();
+        renderBugs(projectFiltered);
+        getTheme();
         bugTable.innerHTML += `
         <h3 class="warning-h3">No se encontraron bugs en ese proyecto, ¿quieres 
             <span onclick="openModalBug()" class="warning-btn">añadir el primero?</span>
@@ -155,12 +157,6 @@ const sortDate = (orden) => {
         statusDate = 1;
         toggleIcon(sortBtn, 'fa-sort-amount-up', 'fa-sort');
     }
-};
-
-//Ordenar bugs por defecto (Éste no funciona, no recarga con el array original)
-const sortDateOriginal = () => {
-    fetchBugs();
-    statusDate = 3;
 };
 
 //Dependiendo el estado de sortBtn, filtra con los dos métodos y/o vuelve al default

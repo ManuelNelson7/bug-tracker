@@ -1,11 +1,18 @@
 import { bugsToRender, bugTable } from "./constants.js";
 import { fetchResults } from "./arrays.js";
+import { fetchBugs } from "./bugs.js";
+
+let bugId;
 
 //Assigns the event click to all the status's buttons in the array
 const assignButtonsStatus = () => {
     const statusButtons = document.querySelectorAll('.estado');
     statusButtons.forEach(statusBtn => {
-        statusBtn.addEventListener('click', () => { openStatus(statusBtn.id) })
+        statusBtn.addEventListener('click', () => {
+            openStatus();
+            bugId = "";
+            bugId = statusBtn.id;
+        })
     })
 };
 
@@ -23,24 +30,23 @@ export const assignBtns = () => {
 };
 
 //Opens the modal to change the status
-export const openStatus = (id) => {
+export const openStatus = () => {
     document.getElementById('modal-status').classList.add('active');
     document.getElementById('edit-status').addEventListener("click", (e) => {
         e.preventDefault()
-        setStatus(id)
+        setStatus()
     });
 };
 
 //Sets the new status to a bug
-export const setStatus = (id) => {
+export const setStatus = () => {
     const newStatus = document.getElementById('new-status').value;
     bugsToRender.forEach(bug => {
-        bug.id === id && (bug.status = newStatus);
+        bug.id === bugId && (bug.status = newStatus);
 
     })
     document.getElementById('modal-status').classList.remove('active');
     localStorage.setItem('bugs', JSON.stringify(bugsToRender));
-    document.getElementById('form-status').reset()
     fetchBugs();
     fetchResults();
 };

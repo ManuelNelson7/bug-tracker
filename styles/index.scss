@@ -193,6 +193,10 @@ main {
                 font-size: 1em;
                 color: $dark-gray;
 
+                &.dark {
+                    color: #fff!important;
+                }
+
                 .warning-btn {
                     text-decoration: underline 2px;
                     color: $green2;

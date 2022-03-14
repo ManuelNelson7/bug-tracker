@@ -305,6 +305,17 @@ nav .sidebar-container .switch-container .switch .slider {
   transition: 0.4s;
 }
 
+nav .sidebar-container .switch-container .switch .slider.dark {
+  background-color: #000000;
+  -webkit-box-shadow: 0 0 1px #000000;
+          box-shadow: 0 0 1px #000000;
+}
+
+nav .sidebar-container .switch-container .switch .slider.dark:before {
+  -webkit-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
 nav .sidebar-container .switch-container .switch .slider:before {
   position: absolute;
   content: "";
@@ -315,20 +326,6 @@ nav .sidebar-container .switch-container .switch .slider:before {
   background-color: white;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-}
-
-nav .sidebar-container .switch-container input:checked + .slider {
-  background-color: #000000;
-}
-
-nav .sidebar-container .switch-container input:focus + .slider {
-  -webkit-box-shadow: 0 0 1px #000000;
-          box-shadow: 0 0 1px #000000;
-}
-
-nav .sidebar-container .switch-container input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  transform: translateX(26px);
 }
 
 nav .sidebar-container .switch-container .slider.round {
@@ -679,6 +676,10 @@ main.min-sidebar {
   margin-top: 1.5em;
   font-size: 1em;
   color: #20395a;
+}
+
+.container table tbody .warning-h3.dark {
+  color: #fff !important;
 }
 
 .container table tbody .warning-h3 .warning-btn {

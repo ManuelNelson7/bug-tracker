@@ -1,6 +1,6 @@
-import { bugsToRender, bugTable } from "./constants.js";
+import { bugTable } from "./constants.js";
 import { assignBtns } from "./functions.js";
-//Filters the bugs according to status
+import { getTheme } from "./darkTheme.js";
 
 //Renders the length of the array inside of an element by id
 export const renderArray = (id, array) => {
@@ -29,7 +29,6 @@ export const toggleSize = (query) => {
     document.querySelector(query).classList.toggle('min-sidebar');
 }
 
-import { getTheme } from "./darkTheme.js";
 
 //Renders the bugs of an array inside of the table
 export const renderBugs = (array) => {
