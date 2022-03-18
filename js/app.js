@@ -46,7 +46,7 @@ const fetchData = () => {
 
 document.getElementById('form-projects').addEventListener("submit", (e) => {
     e.preventDefault()
-})
+});
 
 // Añade un proyecto al array
 const addProject = () => {

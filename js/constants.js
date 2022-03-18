@@ -42,17 +42,16 @@ export const bugs = [
     }
 ];
 
-const fetchOrLocal= async () => {
+const fetchOrLocal = async () => {
     const res = await fetch('/bugsDefault.json')
     const data = await res.json()
-
-    return data;
+    return JSON.parse(localStorage.getItem('bugs')) || data;
 }
 
-fetchOrLocal()
 
 //LocalStorage
-export const bugsToRender = JSON.parse(localStorage.getItem('bugs')) || await fetchOrLocal();
+export const bugsToRender = await fetchOrLocal()
+console.log(bugsToRender)
 export const projectsToRender = JSON.parse(localStorage.getItem('projects')) || projects;
 
 
@@ -64,6 +63,6 @@ export const seconds = 86400000;
 
 //Getting the actual date, stored in "today"
 const dateNow = new Date();
-export const newDate = dateNow.getFullYear()+'-'+(dateNow.getMonth()+1)+'-'+dateNow.getDate();
+export const newDate = dateNow.getFullYear() + '-' + (dateNow.getMonth() + 1) + '-' + dateNow.getDate();
 export const today = new Date(newDate);
 

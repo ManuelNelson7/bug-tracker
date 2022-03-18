@@ -1,7 +1,7 @@
 import { bugsToRender, modalBug, bugTable } from './constants.js';
 import { renderBugs } from './higherOrderFunctions.js';
 import { assignBtns } from './functions.js';
-import {fetchResults} from './arrays.js'
+import { fetchResults } from './arrays.js'
 import { getTheme } from './darkTheme.js';
 
 class Bug {
