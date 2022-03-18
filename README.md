@@ -1,13 +1,3 @@
-# Bug-tracker
-
-Éste es mi proyecto final para el curso de javascript en Coderhouse, aún se encuentra en mantenimiento.
-
-## Live demo
-
-- [Live Site URL](https://manuelnelson7.github.io/bug-tracker/)
-
-
-
 <h1 align="center">🐞 Bug Tracker</h1>
 
 <p align="center">This is a system to track bugs in your code, you can list, edit the status, remove your bugs and you can even separate them by project</p>
