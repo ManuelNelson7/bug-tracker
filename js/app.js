@@ -3,7 +3,6 @@ import { renderBugs, addClick, toggleIcon, openModal } from './higherOrderFuncti
 import { urgents, closed, tomorrow, sevenDays } from './arrays.js'
 import { fetchBugs } from './bugs.js';
 import { addBug } from './bugs.js';
-import { getTheme } from './darkTheme.js';
 
 //Drag and drop
 Sortable.create(bugTable, {
@@ -20,33 +19,30 @@ searchInput.addEventListener("input", e => {
     renderBugs(searchedBugs);
 });
 
-// Fetch de los proyectos para mostrarlos en el sidebar
+//Gets the projects to render them in the sidebar
 const fetchProjects = () => {
     const projectList = document.getElementById('project-list');
     const projectOptions = document.getElementById('projects-options');
 
-    //Vacía las listas para no repetirse en caso de ser llamado de nuevo
     projectList.innerHTML = '';
     projectOptions.innerHTML = '';
 
-    //Por cada elemento en projects, lo imprime en las listas
     projectsToRender.forEach((project) => {
         projectList.innerHTML += `<li id="${project}" class="project-item-list">${project}</li>`;
         projectOptions.innerHTML += `<option value="${project}">${project}</option>`
     })
 };
 
-addClick('all-projects', fetchBugs)
-
-// Fetch de todos los datos apenas se carga el body
-const fetchData = () => {
-    fetchBugs();
-    fetchProjects();
-};
-
 document.getElementById('form-projects').addEventListener("submit", (e) => {
     e.preventDefault()
 });
+<<<<<<< HEAD
+=======
+
+document.getElementById('form-bug').addEventListener("submit", (e) => {
+    e.preventDefault()
+})
+>>>>>>> ba3bdf98bcd05124173bfa7b025dbdbc6d4d2c4a
 
 // Añade un proyecto al array
 const addProject = () => {
@@ -69,17 +65,11 @@ document.getElementById('plus').addEventListener('click', () => {
 });
 
 
-// Crea un Bug
-
-
-addClick('add-bug', addBug);
-
-//Filtrar bugs resueltos onclick
+//Renders the bugs when I click on the result
 addClick('results-total', fetchBugs);
 
 const filterClosed = () => renderBugs(closed);
 addClick('results-closed', filterClosed);
-
 
 const filterUrgents = () => renderBugs(urgents)
 addClick('results-urgent', filterUrgents);
@@ -90,7 +80,7 @@ addClick('results-tomorrow', filterDueTomorrow);
 const filterSevenDays = () => renderBugs(sevenDays);
 addClick('results-seven', filterSevenDays);
 
-//Filtra los bugs por proyecto
+//Filters the bugs by project
 const getProject = (event) => {
     const elements = document.querySelectorAll('.project-selected');
     elements.forEach(element => element.classList.remove('project-selected'));
@@ -98,13 +88,12 @@ const getProject = (event) => {
     const projectClicked = event.target.id;
     event.target.classList.add('project-selected');
     const projectFiltered = bugsToRender.filter((bug) => bug.project === `${projectClicked}`);
-
+    const filterByProject = () => renderBugs(projectFiltered);
 
     if (projectFiltered != "") {
-        renderBugs(projectFiltered);
+        filterByProject();
     } else {
-        renderBugs(projectFiltered);
-        getTheme();
+        filterByProject();
         bugTable.innerHTML += `
         <h3 class="warning-h3">No se encontraron bugs en ese proyecto, ¿quieres 
             <span onclick="openModalBug()" class="warning-btn">añadir el primero?</span>
@@ -114,58 +103,74 @@ const getProject = (event) => {
 
 };
 
-addClick('project-list', getProject);
-
-document.getElementById('all-projects').addEventListener('click', () => {
-    document.getElementById('all-projects').classList.toggle('project-selected')
-});
-
-//Abrir modal bug
+//Opens the modal bug
 const openModalBug = () => {
     modalBug.classList.add('active');
 };
-addClick('open-btn', openModalBug);
 
-//Cerrar modal bug
+//Closes the modal bug
 const closeBtns = document.querySelectorAll('.cancel-btn');
 const modals = document.querySelectorAll('.modal');
 closeBtns.forEach(btn => {
     btn.onclick = () => { modals.forEach(modal => { modal.classList.remove('active') }) };
 });
 
-//Sort por fecha---------------------------------------------------
+//Sorts the bugs By date---------------------------------------------------
 let sortBtn = document.getElementById('sort-date');
 let statusDate = 1;
 
-//Ordenar bugs por fecha (menor a mayor)
-
-const sortDate = (orden) => {
+const sortDate = (order) => {
     const sortedBugs = Object.assign([], bugsToRender);
 
-    if (orden === 1) {
+    if (order === 1) {
         const sortedBugs1 = sortedBugs.sort((a, b) => new Date(a.due) - new Date(b.due));
         renderBugs(sortedBugs1);
         statusDate = 2;
         toggleIcon(sortBtn, 'fa-sort', 'fa-sort-amount-down');
-    } else if (orden === 2) {
+    } else if (order === 2) {
         const sortedBugs2 = sortedBugs.sort((a, b) => new Date(b.due) - new Date(a.due));
         renderBugs(sortedBugs2);
         statusDate = 3;
         toggleIcon(sortBtn, 'fa-sort-amount-down', 'fa-sort-amount-up');
-    } else if (orden === 3) {
+    } else if (order === 3) {
         fetchBugs()
         statusDate = 1;
         toggleIcon(sortBtn, 'fa-sort-amount-up', 'fa-sort');
     }
 };
 
-//Dependiendo el estado de sortBtn, filtra con los dos métodos y/o vuelve al default
 sortBtn.onclick = () => {
     sortDate(statusDate);
 };
 
 //-------------------------------------------------------------
 
-window.addEventListener('DOMContentLoaded', e => {
-    fetchData();
+//Events
+addClick('add-bug', addBug);
+addClick('all-projects', fetchBugs)
+addClick('project-list', getProject);
+addClick('open-btn', openModalBug);
+document.getElementById('all-projects').addEventListener('click', () => {
+    document.getElementById('all-projects').classList.toggle('project-selected')
 });
+
+//Spinner simulator
+const fetchData = () => {
+    fetchBugs();
+    fetchProjects();
+};
+
+const hideSpinner = () => {
+    const spinner = document.querySelector('.loading-container');
+    spinner.classList.add('loaded');
+}
+
+setTimeout(() => {
+    fetchData()
+}, 1000);
+
+setTimeout(() => {
+    hideSpinner()
+}, 1000)
+
+

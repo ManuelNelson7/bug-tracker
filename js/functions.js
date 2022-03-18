@@ -1,4 +1,4 @@
-import { bugsToRender, bugTable } from "./constants.js";
+import { bugsToRender } from "./constants.js";
 import { fetchResults } from "./arrays.js";
 import { fetchBugs } from "./bugs.js";
 
@@ -43,7 +43,6 @@ export const setStatus = () => {
     const newStatus = document.getElementById('new-status').value;
     bugsToRender.forEach(bug => {
         bug.id === bugId && (bug.status = newStatus);
-
     })
     document.getElementById('modal-status').classList.remove('active');
     localStorage.setItem('bugs', JSON.stringify(bugsToRender));

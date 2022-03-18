@@ -179,10 +179,20 @@ nav {
             justify-content: center;
             position: absolute;
             bottom: 4em;
+            align-items: center;
 
+            gap: 1em;
+            
             &.min-sidebar {
-                display: flex;
+                i {
+                    display: none;
+                }
             }
+            i {
+                font-size: 1.2em;
+                color: white;
+            }
+
 
             .switch {
                 position: relative;

@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/img/favicon.svg" type="image/svg">
     <link rel="apple-touch-icon" href="/img/favicon.svg">
-    <script src="https://kit.fontawesome.com/ceabe9f5f3.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="./styles/index.css">
     <title>Bug Tracker</title>
@@ -19,18 +18,18 @@
         <form class="form" id="form-bug" action="">
             <div class="form-group">
                 <label for="bug-name">Bug</label>
-                <input id="bug-name" type="text" placeholder="Nombre del bug" required>
+                <input id="bug-name" type="text" placeholder="Nombre del bug">
             </div>
 
             <div class="form-group">
                 <label for="status">Proyecto</label>
-                <select name="projects" id="projects-options" required>
+                <select name="projects" id="projects-options">
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="status">Estado</label>
-                <select name="status" id="status" required>
+                <select name="status" id="status">
                     <option value="Pendiente">Pendiente</option>
                     <option value="En proceso">En proceso</option>
                     <option value="Urgente">Urgente</option>
@@ -40,12 +39,12 @@
 
             <div class="form-group">
                 <label for="date">Fecha de entrega</label>
-                <input id="due" type="date" placeholder="Fecha de entrega" required>
+                <input id="due" type="date" placeholder="Fecha de entrega">
             </div>
 
             <div class="form-group">
                 <label for="responsible">Responsable</label>
-                <input id="responsible" type="text" placeholder="Responsable" required>
+                <input id="responsible" type="text" placeholder="Responsable">
             </div>
 
             <div class="form-group">
@@ -128,10 +127,12 @@
             <i id="search-mobile" class="fas fa-search"></i>
 
             <div class="switch-container">
+                <i class="fas fa-sun"></i>
                 <label class="switch">
                     <input id="switch-theme" type="checkbox">
                     <span class="slider round"></span>
                 </label>
+                <i class="fas fa-moon"></i>
             </div>
 
         </div>
@@ -192,9 +193,16 @@
                 </tbody>
             </table>
 
+            <div class="loading-container">
+                <div class="loading-bar"></div>
+                <h3 class="loading-bugs">Cargando bugs...</h3>
+            </div>
+
+
         </div>
     </main>
 
+    <script src="https://kit.fontawesome.com/ceabe9f5f3.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chance/1.1.8/chance.min.js"></script>
