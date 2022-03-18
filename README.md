@@ -8,7 +8,7 @@
 
 - [Repo](https://github.com/ManuelNelson7/bug-tracker)
 
-- [Live](https://manuelnelson7.github.io/bug-tracker/)
+- [Live](https://bugtracker-manuel.netlify.app/)
 
 ## Built With
 
