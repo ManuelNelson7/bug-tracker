@@ -6,15 +6,8 @@ const fetchOrLocal = async () => {
     return JSON.parse(localStorage.getItem('bugs')) || data;
 }
 
-<<<<<<< HEAD
-
 //LocalStorage
 export const bugsToRender = await fetchOrLocal()
-console.log(bugsToRender)
-=======
-//LocalStorage
-export const bugsToRender = await fetchOrLocal()
->>>>>>> ba3bdf98bcd05124173bfa7b025dbdbc6d4d2c4a
 export const projectsToRender = JSON.parse(localStorage.getItem('projects')) || projects;
 
 

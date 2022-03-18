@@ -36,13 +36,10 @@ const fetchProjects = () => {
 document.getElementById('form-projects').addEventListener("submit", (e) => {
     e.preventDefault()
 });
-<<<<<<< HEAD
-=======
 
 document.getElementById('form-bug').addEventListener("submit", (e) => {
     e.preventDefault()
 })
->>>>>>> ba3bdf98bcd05124173bfa7b025dbdbc6d4d2c4a
 
 // Añade un proyecto al array
 const addProject = () => {
