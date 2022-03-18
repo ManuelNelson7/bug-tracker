@@ -1,46 +1,4 @@
 export const projects = ['Bug Tracker', 'miTask', 'Backend'];
-export const bugs = [
-    {
-        id: "2b37c8b2-c128-547b-a51b-b32be2a7958a",
-        name: "La aplicación no se conecta a una base de datos, por lo que tiene que ser hardcodeada",
-        project: "Bug Tracker",
-        status: "En proceso",
-        due: "January 30, 2022",
-        responsible: "Manuel Nelson"
-    },
-    {
-        id: "4b37c8b2-c128-547b-a51b-b33be2a7958a",
-        name: "La aplicación no es responsive",
-        project: "Bug Tracker",
-        status: "Pendiente",
-        due: "February 02, 2022",
-        responsible: "Manuel Nelson"
-    },
-    {
-        id: "2637c8b2-c128-547b-a51b-b35be2a7958a",
-        name: "Todavía no hay modals para agregar un bug, sacar cuanto antes el form del sidebar",
-        project: "Bug Tracker",
-        status: "Pendiente",
-        due: "February 12, 2022",
-        responsible: "Manuel Nelson"
-    },
-    {
-        id: "2b37c8b2-c128-547b-a51b-b336e2a7958a",
-        name: "Crear layout y hardcodear, para probar UI",
-        project: "Bug Tracker",
-        status: "Resuelto",
-        due: "February 10, 2022",
-        responsible: "Manuel Nelson"
-    },
-    {
-        id: "2b37c8b2-c128-547b-251b-b33be2a7958a",
-        name: "Entregar proyecto final",
-        project: "miTask",
-        status: "Urgente",
-        due: "March 02, 2022",
-        responsible: "Manuel Nelson"
-    }
-];
 
 const fetchOrLocal = async () => {
     const res = await fetch('/bugsDefault.json')
@@ -48,10 +6,8 @@ const fetchOrLocal = async () => {
     return JSON.parse(localStorage.getItem('bugs')) || data;
 }
 
-
 //LocalStorage
 export const bugsToRender = await fetchOrLocal()
-console.log(bugsToRender)
 export const projectsToRender = JSON.parse(localStorage.getItem('projects')) || projects;
 
 
@@ -63,6 +19,5 @@ export const seconds = 86400000;
 
 //Getting the actual date, stored in "today"
 const dateNow = new Date();
-export const newDate = dateNow.getFullYear()+'-'+(dateNow.getMonth()+1)+'-'+dateNow.getDate();
+export const newDate = dateNow.getFullYear() + '-' + (dateNow.getMonth() + 1) + '-' + dateNow.getDate();
 export const today = new Date(newDate);
-

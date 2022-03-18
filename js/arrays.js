@@ -6,10 +6,18 @@ const filterBugs = (status) => {
     return bugsToRender.filter((bug) => bug.status === status);
 };
 
+const reloadDueTomorrow = () => {
+    return bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) == 1);
+}
+
+const reloadSevenDays = () => {
+    return bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) >= 7);
+}
+
 export let closed = filterBugs('Resuelto');
 export let urgents = filterBugs('Urgente');
-export let tomorrow = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) == 1);
-export let sevenDays = bugsToRender.filter((bug) => ((new Date(bug.due) - today) / seconds) >= 7);
+export let tomorrow = reloadDueTomorrow();
+export let sevenDays = reloadSevenDays();
 
 
 //-----Bugs count-----
@@ -39,11 +47,14 @@ const fetchUrgentBugs = () => {
 
 //Contabiliza los bugs para manana
 const fetchDueTomorrow = () => {
+    tomorrow = reloadDueTomorrow();
+    console.log(tomorrow);
     renderArray('tomorrow-bugs', tomorrow);
 }
 
 //Contabiliza los bugs para dentro de 7 días
 const fetchSevenDays = () => {
+    sevenDays = reloadSevenDays();
     renderArray('seven-bugs', sevenDays);
 }
 

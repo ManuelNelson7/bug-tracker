@@ -2,7 +2,6 @@ let theme = JSON.parse(localStorage.getItem('theme'));
 
 window.addEventListener('DOMContentLoaded', e => {
     getTheme();
-    console.log(theme);
 });
 
 //Adds the class 'dark' to a node (by id)
@@ -32,6 +31,7 @@ export const getTheme = () => {
         addDark('#bug-table');
         addDark('#resize');
         addDark('.slider');
+        addDark('.loading-container');
 
     } else {
         let dates = document.querySelectorAll('.date');
@@ -46,7 +46,8 @@ export const getTheme = () => {
         removeDark('#thead');
         removeDark('#bug-table');
         removeDark('#resize');
-        removeDark('.slider')
+        removeDark('.slider');
+        removeDark('.loading-container');
     }
 };
 

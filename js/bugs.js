@@ -1,7 +1,7 @@
 import { bugsToRender, modalBug, bugTable } from './constants.js';
 import { renderBugs } from './higherOrderFunctions.js';
 import { assignBtns } from './functions.js';
-import {fetchResults} from './arrays.js'
+import { fetchResults } from './arrays.js'
 import { getTheme } from './darkTheme.js';
 
 class Bug {
@@ -24,7 +24,6 @@ export const addBug = () => {
     const bugResponsible = document.getElementById('responsible').value;
     const alertBug = document.getElementById('alertBug');
 
-    //Si los campos están llenos, crea un nuevo Bug y lo añade al array
     if (bugName && bugProject && bugStatus && bugDue && bugResponsible) {
         const newBug = new Bug(bugId, bugName, bugProject, bugStatus, bugDue, bugResponsible);
         bugsToRender.push(newBug);
