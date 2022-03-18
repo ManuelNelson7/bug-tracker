@@ -48,7 +48,6 @@ const fetchUrgentBugs = () => {
 //Contabiliza los bugs para manana
 const fetchDueTomorrow = () => {
     tomorrow = reloadDueTomorrow();
-    console.log(tomorrow);
     renderArray('tomorrow-bugs', tomorrow);
 }
 
